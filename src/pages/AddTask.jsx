@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTodo } from "../contexts/todoContext";
-import { useHistory, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import "../styles.css";
 
 function AddTask() {

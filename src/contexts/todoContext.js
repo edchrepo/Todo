@@ -12,13 +12,13 @@ export function useTodo() {
 export const TodoProvider = ({ children }) => {
   const { id } = useParams();
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  const [filteredTodos, setFilteredTodos] = useState(initialTodos);
   const [todos, setTodos] = useState(initialTodos);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos, filteredTodos]);
+  }, [todos]);
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {...todo, id : uid()}];
@@ -52,8 +52,6 @@ export const TodoProvider = ({ children }) => {
         sortedTodos = todos;
     }
     setTodos(sortedTodos);
-    setFilteredTodos(sortedTodos);
-    filterTodos(searchTerm);
   }
 
   const filterTodos = (searchTerm) => {
@@ -78,6 +76,11 @@ export const TodoProvider = ({ children }) => {
   const getTodo = (id) => {
     return todos.find((todo) => todo.id === id);
   };
+
+  useEffect(() => {
+    filterTodos(searchTerm);
+  }, [searchTerm, todos, filterTodos]);
+
   return (
     <TodoContext.Provider
       value={{ todos, filteredTodos, sortTodos, filterTodos, addTodo, completeTodo, removeTodo, getTodo }}
