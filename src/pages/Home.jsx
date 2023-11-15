@@ -5,15 +5,10 @@ import { Link } from "react-router-dom";
 
 
 const Home = () => {
-  const { todos, sortTodos } = useTodo();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { todos, filteredTodos, sortTodos, filterTodos } = useTodo();
 
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSearch = () => {
-    console.log('Search term:', searchTerm);
+  const handleChange = (e) => {
+    filterTodos(e.target.value);
   };
 
   return (
@@ -22,10 +17,8 @@ const Home = () => {
         <input
           type="text"
           placeholder="Search..."
-          value={searchTerm}
-          onChange={handleInputChange}
+          onChange={handleChange}
         />
-        <button onClick={handleSearch}>Search</button>
         <div>
           <p>Sort</p>
           <select onChange={(e) => sortTodos(e.target.value)}>
@@ -38,7 +31,7 @@ const Home = () => {
             <option value="Descending Priority">Descending Priority</option>
           </select>
         </div>
-        {todos.map((todo) => (
+        {filteredTodos.map((todo) => (
           <Todo key={todo.id} todo={todo} />
         ))}
       <Link to={"/addTask"}>

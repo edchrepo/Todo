@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { uid } from "uid";
 
@@ -11,7 +11,14 @@ export function useTodo() {
 
 export const TodoProvider = ({ children }) => {
   const { id } = useParams();
-  const [todos, setTodos] = useState([]);
+  const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
+  const [filteredTodos, setFilteredTodos] = useState([]);
+  const [todos, setTodos] = useState(initialTodos);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos, filteredTodos]);
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {...todo, id : uid()}];
@@ -45,6 +52,14 @@ export const TodoProvider = ({ children }) => {
         sortedTodos = todos;
     }
     setTodos(sortedTodos);
+    setFilteredTodos(sortedTodos);
+    filterTodos(searchTerm);
+  }
+
+  const filterTodos = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    let filtered = [...todos].filter((todo) => todo.todoName.includes(searchTerm))
+    setFilteredTodos(filtered);
   }
 
 
@@ -65,7 +80,7 @@ export const TodoProvider = ({ children }) => {
   };
   return (
     <TodoContext.Provider
-      value={{ todos, sortTodos, addTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, filteredTodos, sortTodos, filterTodos, addTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>

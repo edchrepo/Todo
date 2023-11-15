@@ -12,6 +12,7 @@ function AddTask() {
   const handleChange = (e) => {
     setTodoData({...todoData, [e.target.name]: e.target.value})
   };
+  
   // const handleChange = (event) => {
   //   const { name, value } = event.target;
   
@@ -21,7 +22,6 @@ function AddTask() {
   //     subtasks: name === 'subtasks' ? [...prevTodoData.subtasks, value] : prevTodoData.subtasks,
   //   }));
   // };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
