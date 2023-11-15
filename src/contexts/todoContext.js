@@ -79,7 +79,7 @@ export const TodoProvider = ({ children }) => {
 
   useEffect(() => {
     filterTodos(searchTerm);
-  }, [searchTerm, todos, filterTodos]);
+  }, [todos]);
 
   return (
     <TodoContext.Provider
