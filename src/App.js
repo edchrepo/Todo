@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import Todos from "./pages/Todos";
-import TodoDetail from "./pages/Todo";
+import Home from "./pages/Home";
+import TodoDetail from "./pages/TodoDetail";
+import AddTask from "./pages/AddTask";
+import EditTask from "./pages/EditTask"
 import { TodoProvider } from "./contexts/todoContext";
 
 function App() {
@@ -12,8 +14,10 @@ function App() {
       </nav>
       <TodoProvider>
         <Routes>
-          <Route exact path="/" element={<Todos />} />
+          <Route exact path="/" element={<Home />} />
           <Route path="/todo/:id" element={<TodoDetail />} />
+          <Route path="/addTask" element={<AddTask />} />
+          <Route path="/editTask/:id" element={<EditTask />} />
         </Routes>
       </TodoProvider>
     </Router>

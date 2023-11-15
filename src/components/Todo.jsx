@@ -8,7 +8,7 @@ function Todo({ todo }) {
       className="todo"
       style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
     >
-      <Link to={`/todo/${todo.id}`}>{todo.text}</Link>
+      <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
       <div>
         <button onClick={() => completeTodo(todo)}>Complete</button>
         <button onClick={() => removeTodo(todo)}>x</button>
