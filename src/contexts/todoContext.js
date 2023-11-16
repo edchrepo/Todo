@@ -36,10 +36,10 @@ export const TodoProvider = ({ children }) => {
   
     switch (selectedOption) {
       case 'Ascending Date':
-        sortedTodos = [...todos].sort((a, b) => new Date(a.date) - new Date(b.date));
+        sortedTodos = [...todos].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
         break;
       case 'Descending Date':
-        sortedTodos = [...todos].sort((a, b) => new Date(b.date) - new Date(a.date));
+        sortedTodos = [...todos].sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
         break;
       case 'Ascending Complexity':
         sortedTodos = [...todos].sort((a, b) => a.complexity - b.complexity);

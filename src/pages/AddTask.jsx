@@ -26,7 +26,12 @@ function AddTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todoData) return;
-    addTodo(todoData);
+
+    // handle datetime converion before adding todo to list of todos
+
+    const dateTimeString = todoData.date + 'T' + todoData.time;
+
+    addTodo({...todoData, dueDate: dateTimeString});
     navigate("/");
   };
 

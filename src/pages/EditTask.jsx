@@ -19,7 +19,11 @@ function EditTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todo) return;
-    editTodo(todo);
+
+    // handle datetime converion before adding todo to list of todos
+    const dateTimeString = todo.date + 'T' + todo.time;
+
+    editTodo({...todo, dueDate: dateTimeString});
     navigate("/");
   };
 
@@ -79,6 +83,7 @@ function EditTask() {
           <input
             type="time"
             name="time"
+            value={todo.time ? todo.time : ""}
             onChange={(event) => {handleChange(event)}}
           />
         </div>
