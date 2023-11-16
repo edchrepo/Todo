@@ -1,27 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom"
 import "../styles.css";
 
 function AddTask() {
-  const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, subtasks: [], isCompleted: false };
+  const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", sCompleted: false };
   const [todoData, setTodoData] = useState(initialState);
+  const [subtask, setSubtask] = useState("");
+  const [subtasks, setSubtasks] = useState([]);
   const { addTodo } = useTodo();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setTodoData({...todoData, [e.target.name]: e.target.value})
   };
-  
-  // const handleChange = (event) => {
-  //   const { name, value } = event.target;
-  
-  //   setTodoData((prevTodoData) => ({
-  //     ...prevTodoData,
-  //     [name]: value,
-  //     subtasks: name === 'subtasks' ? [...prevTodoData.subtasks, value] : prevTodoData.subtasks,
-  //   }));
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,9 +23,18 @@ function AddTask() {
 
     const dateTimeString = todoData.date + 'T' + todoData.time;
 
-    addTodo({...todoData, dueDate: dateTimeString});
+    addTodo({...todoData, dueDate: dateTimeString, subtasks: subtasks});
     navigate("/");
   };
+
+  const addSubTask = () => {
+    setSubtasks([...subtasks, subtask]);
+    setSubtask("");
+  }
+
+  const removeSubTask = (task) => {
+    setSubtasks([...subtasks].filter((s) => s != task));
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -94,22 +95,44 @@ function AddTask() {
       <div>
         <p>Add CheckList For Subtasks</p>
         <ul>
-          {todoData.subtasks.map((subtask, index) => (
-            <li key={index}>{subtask}</li>
+          {subtasks.map((subtask, index) => (
+            <>
+              <input 
+                key={index}
+                type="text"
+                name="subtask"
+                value={subtask}
+                onChange={(e) => setSubtasks([...subtasks].map((s) => s === subtask ? e.target.value : s))}
+              />
+              <button type="button" onClick={() => removeSubTask(subtask)}>
+                x
+              </button>
+              <br/>
+            </>
           ))}
         </ul>
         <div>
           <input
             type="text"
             name="subtasks"
-            value={todoData.subtasks}
-            onChange={handleChange}
+            value={subtask}
             placeholder="Add New Subtask..."
+            onChange={(e) => setSubtask(e.target.value)}
           />
-          <button type="button" onClick={handleChange}>
+          <button type="button" onClick={addSubTask}>
             +
           </button>
         </div>
+      </div>
+      <div>
+        <p>Add Tags</p>
+          <input
+            type="text"
+            name="tags"
+            onChange={(event) => {
+                handleChange(event);
+            }}
+          />
       </div>
       <button type="submit">Create Task</button>
     </form>

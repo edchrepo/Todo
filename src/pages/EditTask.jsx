@@ -8,6 +8,8 @@ function EditTask() {
   const { id } = useParams();
 
   const todoEdit = initialTodos.find((t) => t.id == id)
+  const [subtask, setSubtask] = useState("");
+  const [subtasks, setSubtasks] = useState(todoEdit.subtasks);
   const [todo, setTodo] = useState(todoEdit);
   const { editTodo } = useTodo();
   const navigate = useNavigate();
@@ -23,9 +25,18 @@ function EditTask() {
     // handle datetime converion before adding todo to list of todos
     const dateTimeString = todo.date + 'T' + todo.time;
 
-    editTodo({...todo, dueDate: dateTimeString});
+    editTodo({...todo, dueDate: dateTimeString, subtasks: subtasks});
     navigate("/");
   };
+
+  const addSubTask = () => {
+    setSubtasks([...subtasks, subtask]);
+    setSubtask("");
+  }
+
+  const removeSubTask = (task) => {
+    setSubtasks([...subtasks].filter((s) => s != task));
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -91,22 +102,45 @@ function EditTask() {
       <div>
         <p>Add CheckList For Subtasks</p>
         <ul>
-          {todo.subtasks.map((subtask, index) => (
-            <li key={index}>{subtask}</li>
+          {subtasks.map((subtask, index) => (
+            <>
+              <input 
+                key={index}
+                type="text"
+                name="subtask"
+                value={subtask}
+                onChange={(e) => setSubtasks([...subtasks].map((s) => s === subtask ? e.target.value : s))}
+              />
+              <button type="button" onClick={() => removeSubTask(subtask)}>
+                x
+              </button>
+              <br/>
+            </>
           ))}
         </ul>
         <div>
           <input
             type="text"
             name="subtasks"
-            value={todo.subtasks}
-            onChange={handleChange}
+            value={subtask}
             placeholder="Add New Subtask..."
+            onChange={(e) => setSubtask(e.target.value)}
           />
-          <button type="button" onClick={handleChange}>
+          <button type="button" onClick={addSubTask}>
             +
           </button>
         </div>
+      </div>
+      <div>
+        <p>Add Tags</p>
+          <input
+            type="text"
+            name="tags"
+            value={todo.tags}
+            onChange={(event) => {
+                handleChange(event);
+            }}
+          />
       </div>
       <button type="submit">Edit Task</button>
     </form>
