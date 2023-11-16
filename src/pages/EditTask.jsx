@@ -70,6 +70,7 @@ function EditTask() {
           <input
             type="date"
             name="date"
+            value={todo.date ? todo.date : ""}
             onChange={(event) => {handleChange(event)}}
           />
         </div>
