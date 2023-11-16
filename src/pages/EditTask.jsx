@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { useTodo } from "../contexts/todoContext";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import "../styles.css";
 
 function EditTask() {
-  const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, subtasks: [], isCompleted: false };
-  const [todoData, setTodoData] = useState(initialState);
-  const { addTodo } = useTodo();
+  const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
+  const { id } = useParams();
+
+  const todoEdit = initialTodos.find((t) => t.id == id)
+  const [todo, setTodo] = useState(todoEdit);
+  const { editTodo } = useTodo();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setTodoData({...todoData, [e.target.name]: e.target.value})
+    setTodo({...todo, [e.target.name]: e.target.value})
   };
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!todoData) return;
-    addTodo(todoData);
+    if (!todo) return;
+    editTodo(todo);
     navigate("/");
   };
 
@@ -26,6 +29,7 @@ function EditTask() {
         type="text"
         className="input"
         name="todoName"
+        value={todo.todoName}
         onChange={(event) => {
             handleChange(event);
         }}
@@ -38,6 +42,7 @@ function EditTask() {
                 type="radio"
                 name="priority"
                 value={level}
+                checked={todo.priority == level ? true : false}
                 onChange={(event) => {handleChange(event)}}
               />
               {level}
@@ -52,6 +57,7 @@ function EditTask() {
                 type="radio"
                 name="complexity"
                 value={level}
+                checked={todo.complexity == level ? true : false}
                 onChange={(event) => {handleChange(event)}}
               />
               {level}
@@ -79,7 +85,7 @@ function EditTask() {
       <div>
         <p>Add CheckList For Subtasks</p>
         <ul>
-          {todoData.subtasks.map((subtask, index) => (
+          {todo.subtasks.map((subtask, index) => (
             <li key={index}>{subtask}</li>
           ))}
         </ul>
@@ -87,7 +93,7 @@ function EditTask() {
           <input
             type="text"
             name="subtasks"
-            value={todoData.subtasks}
+            value={todo.subtasks}
             onChange={handleChange}
             placeholder="Add New Subtask..."
           />
@@ -96,7 +102,7 @@ function EditTask() {
           </button>
         </div>
       </div>
-      <button type="submit">Create Task</button>
+      <button type="submit">Edit Task</button>
     </form>
 
   );

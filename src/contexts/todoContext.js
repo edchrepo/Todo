@@ -26,6 +26,11 @@ export const TodoProvider = ({ children }) => {
     setTodos(newTodos);
   };
 
+  const editTodo = (todo) => {
+    const newTodos = [...todos].map((t) => t.id === todo.id ? todo : t)
+    setTodos(newTodos);
+  }
+
   const sortTodos = (selectedOption) => {
     let sortedTodos;
   
@@ -83,7 +88,7 @@ export const TodoProvider = ({ children }) => {
 
   return (
     <TodoContext.Provider
-      value={{ todos, filteredTodos, sortTodos, filterTodos, addTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, filteredTodos, sortTodos, filterTodos, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>
