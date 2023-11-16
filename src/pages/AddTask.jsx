@@ -21,7 +21,7 @@ function AddTask() {
 
     // handle datetime converion before adding todo to list of todos
 
-    const dateTimeString = todoData.date + 'T' + todoData.time;
+    const dateTimeString = `${todoData.date}T${todoData.time || '00:00:00'}`;
 
     addTodo({...todoData, dueDate: dateTimeString, subtasks: subtasks});
     navigate("/");

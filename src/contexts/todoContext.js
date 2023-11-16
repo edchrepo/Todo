@@ -13,6 +13,7 @@ export const TodoProvider = ({ children }) => {
   const { id } = useParams();
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const [filteredTodos, setFilteredTodos] = useState(initialTodos);
+  const [categoryFiltered, setCategoryFiltered] = useState(initialTodos);
   const [todos, setTodos] = useState(initialTodos);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -22,7 +23,6 @@ export const TodoProvider = ({ children }) => {
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {...todo, id : uid()}];
-    console.log(newTodos);
     setTodos(newTodos);
   };
 
@@ -59,10 +59,17 @@ export const TodoProvider = ({ children }) => {
     setTodos(sortedTodos);
   }
 
-  const filterTodos = (searchTerm) => {
+  const searchFilterTodos = (searchTerm) => {
     setSearchTerm(searchTerm);
     let filtered = [...todos].filter((todo) => todo.todoName.includes(searchTerm))
     setFilteredTodos(filtered);
+  }
+
+  const categoryFilterTodos = (category) => {
+    if (!(category == "Default")) {
+      let filtered = [...todos].filter((todo) => todo.tags == category)
+      setCategoryFiltered(filtered);
+    }
   }
 
 
@@ -83,12 +90,12 @@ export const TodoProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    filterTodos(searchTerm);
+    searchFilterTodos(searchTerm);
   }, [todos]);
 
   return (
     <TodoContext.Provider
-      value={{ todos, filteredTodos, sortTodos, filterTodos, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, filteredTodos, categoryFiltered, sortTodos, searchFilterTodos, categoryFilterTodos, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>

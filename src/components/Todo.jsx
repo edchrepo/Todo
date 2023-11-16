@@ -1,16 +1,39 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom"
+import "../styles.css";
 
 function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
+  const [colorLabel, setColorLabel] = useState("#0d99ff");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    handleColor();
+  }, [todo]);
+
+  const handleColor = () => {
+    const todoDate = todo.dueDate ? new Date(todo.dueDate) : 0;
+    const currentDate = new Date();
+    const dayDifference = Math.ceil((todoDate - currentDate) / (1000 * 60 * 60 * 24));
+    if (dayDifference == 0) {
+      setColorLabel("#ff4034")
+    }
+    else if (dayDifference <= 3) {
+      setColorLabel("#fe7e08")
+    }
+    else {
+      setColorLabel("#0d99ff")
+    }
+  }
 
   return (
     <div
       className="todo"
       style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
     >
+      <span style={{backgroundColor: colorLabel}}/>
       <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
       <div>
         <button onClick={() => completeTodo(todo)}>Complete</button>
@@ -22,3 +45,4 @@ function Todo({ todo }) {
 }
 
 export default Todo;
+
