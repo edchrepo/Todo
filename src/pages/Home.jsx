@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles.css";
 
 function Home() {
-  const { todos, displayedTodos, setSearchTerm, setSort, setFilterTags} = useTodo();
+  const { todos, displayedTodos, power, powerTodo, togglePower, setSearchTerm, setSort, setFilterTags} = useTodo();
   const tags = new Set();
   todos.forEach((t) => t.tags.split(',').forEach((tag) => tags.add(tag.trim())))
 
@@ -39,7 +39,8 @@ function Home() {
             </select>
           </div>
         </div>
-        {displayedTodos.map((todo) => (<Todo key={todo.id} todo={todo} />))}
+        {power ? <Todo key={powerTodo.id} todo={powerTodo}/> : displayedTodos.map((todo) => (<Todo key={todo.id} todo={todo} />))}
+        <button onClick={() => togglePower()}>{`Power ${!power ? "On" : "Off"}`}</button>
       <Link to={"/addTask"}>
           <button>Add New Task</button>
       </Link>

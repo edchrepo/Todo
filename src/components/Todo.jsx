@@ -15,13 +15,13 @@ function Todo({ todo }) {
   }, [todo]);
 
   const handleColor = () => {
-    const todoDate = todo.dueDate ? new Date(todo.dueDate) : 0;
+    const todoDate = todo.date ? new Date(`${todo.date}T${todo.time || '00:00:00'}`) : 0;
     const currentDate = new Date();
     const dayDifference = Math.ceil((todoDate - currentDate) / (1000 * 60 * 60 * 24));
     if (dayDifference == 0) {
       setColorLabel("#ff4034")
     }
-    else if (dayDifference <= 3) {
+    else if (dayDifference <= 3 && dayDifference > 0) {
       setColorLabel("#fe7e08")
     }
     else {

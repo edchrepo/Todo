@@ -10,7 +10,7 @@ const TodoDetail = () => {
   const [colorLabel, setColorLabel] = useState("#0d99ff");
   const [progress, setProgress] = useState(0);
   const todo = getTodo(id);
-  const todoDate = todo.dueDate ? new Date(todo.dueDate) : 0;
+  const todoDate = todo.date ? new Date(`${todo.date}T${todo.time || '00:00:00'}`) : 0;
 
 
   if (!todo) return <div>No todo found</div>;
@@ -37,7 +37,7 @@ const TodoDetail = () => {
     if (dayDifference == 0) {
       setColorLabel("#ff4034")
     }
-    else if (dayDifference <= 3) {
+    else if (dayDifference <= 3 && dayDifference > 0) {
       setColorLabel("#fe7e08")
     }
     else {
