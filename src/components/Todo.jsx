@@ -8,11 +8,19 @@ import "../styles.css";
 function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
+  const [progress, setProgress] = useState(0)
   const navigate = useNavigate();
 
   useEffect(() => {
     handleColor();
   }, [todo]);
+
+  useEffect(() => {
+    const totalCheckedSubtasks = todo.subtasks.filter(
+      (subtask) => subtask.isChecked
+    ).length;
+    setProgress(Math.floor((totalCheckedSubtasks / todo.subtasks.length) * 100));
+  }, [todo.subtasks]);
 
   const handleColor = () => {
     const todoDate = todo.date ? new Date(`${todo.date}T${todo.time || '00:00:00'}`) : 0;
@@ -41,7 +49,7 @@ function Todo({ todo }) {
         <button onClick={() => removeTodo(todo)}>x</button>
         <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
       </div>
-      <ProgressBar progress={15}/>
+      <ProgressBar progress={progress}/>
     </div>
   );
 }

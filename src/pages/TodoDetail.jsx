@@ -5,7 +5,7 @@ import ProgressBar from "../components/ProgressBar";
 
 const TodoDetail = () => {
   const { id } = useParams();
-  const { getTodo } = useTodo();
+  const { getTodo, editTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
   const [progress, setProgress] = useState(0);
   const todo = getTodo(id);
@@ -25,6 +25,7 @@ const TodoDetail = () => {
       (subtask) => subtask.isChecked
     ).length;
     setProgress(Math.floor((totalCheckedSubtasks / subtasks.length) * 100));
+    editTodo({...todo, subtasks: subtasks})
   }, [subtasks]);
 
   function getLabelForNumber(number) {
