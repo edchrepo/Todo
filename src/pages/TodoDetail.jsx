@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useTodo } from "../contexts/todoContext";
 import Todo from "../components/Todo"
 import { useState, useEffect } from "react";
-import ProgressBar from "../components/ProgressBar";
 
 const TodoDetail = () => {
   const { id } = useParams();

@@ -59,12 +59,15 @@ function Todo({ todo }) {
       <div className="todoTop">
         <span style={{backgroundColor: colorLabel}}/>
         <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
+        <div className="grow"/>
         <div>
           <button onClick={() => completeTodo(todo)}>Complete</button>
-          <button onClick={() => removeTodo(todo)}>x</button>
+          <button onClick={() => {removeTodo(todo)
+                                  navigate('/')}}>x</button>
           <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
         </div>
       </div>
+      <br />
       {`Due Date: ${todoDate.toLocaleString("en-US", { timeZone: "EST" })}`}
       <br />
       {`Priority: ${getLabelForNumber(todo.priority)}(${todo.priority}/10)`}

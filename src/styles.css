@@ -38,6 +38,10 @@ body {
   display: flex;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 ul {
   padding: 0;
 }
