@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom"
+import ProgressBar from "./ProgressBar"
 import "../styles.css";
 
 function Todo({ todo }) {
@@ -31,7 +32,7 @@ function Todo({ todo }) {
   return (
     <div
       className="todo"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      style={{ width: "33%", textDecoration: todo.isCompleted ? "line-through" : "" }}
     >
       <span style={{backgroundColor: colorLabel}}/>
       <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
@@ -40,6 +41,7 @@ function Todo({ todo }) {
         <button onClick={() => removeTodo(todo)}>x</button>
         <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
       </div>
+      <ProgressBar progress={50}/>
     </div>
   );
 }
