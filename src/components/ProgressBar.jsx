@@ -2,7 +2,7 @@
 /* Reference ProgressBar https://www.geeksforgeeks.org/how-to-create-a-custom-progress-bar-component-in-react-js/# */
 
 const ProgressBar = ({progress}) => {
-
+  
     const Parentdiv = {
         width: '100%',
         backgroundColor: 'whitesmoke',

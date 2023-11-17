@@ -53,16 +53,14 @@ function Todo({ todo }) {
   }
 
   return (
-    <div className="todo"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
-    >
+    <div className="todo" style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
       <div className="todoTop">
         <span style={{backgroundColor: colorLabel}}/>
         <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
         <div className="grow"/>
         <div>
           <button onClick={() => completeTodo(todo)}>Complete</button>
-          <button onClick={() => {removeTodo(todo)
+          <button onClick={() => {removeTodo(todo) 
                                   navigate('/')}}>x</button>
           <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
         </div>
@@ -72,9 +70,7 @@ function Todo({ todo }) {
       <br />
       {`Priority: ${getLabelForNumber(todo.priority)}(${todo.priority}/10)`}
       <br />
-      {`Complexity: ${getLabelForNumber(todo.complexity)}(${
-        todo.complexity
-      }/10)`}
+      {`Complexity: ${getLabelForNumber(todo.complexity)}(${todo.complexity}/10)`}
       <p>Task Completed: </p>
       <ProgressBar progress={progress} />
     </div>

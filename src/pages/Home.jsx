@@ -44,24 +44,17 @@ function Home() {
           <select className="categorysort" onChange={(e) => setFilterTags(e.target.value)}>
             <option value="">Default</option>
             {[...tags].map((tag, index) => (
-              <option key={index} value={tag}>
-                {tag}
-              </option>
+              <option key={index} value={tag}>{tag}</option>
             ))}
           </select>
         </div>
       </div>
       <br />
       <div className="todos">
-      {power ? (
-        <Todo key={powerTodo.id} todo={powerTodo} />
-      ) : (
-        displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />)
-      )}
-      <button onClick={() => togglePower()}>{`Power ${
-        !power ? "On" : "Off"
-      }`}</button>
+        {power ? (<Todo key={powerTodo.id} todo={powerTodo} />) 
+        : (displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />))}
       </div>
+      <button onClick={() => togglePower()}>{`Power ${!power ? "On" : "Off"}`}</button>
       <Link to={"/addTask"}>
         <button>Add New Task</button>
       </Link>

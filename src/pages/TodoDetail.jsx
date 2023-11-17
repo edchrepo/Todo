@@ -13,6 +13,7 @@ const TodoDetail = () => {
   if (!todo) return <div>No todo found</div>;
 
   useEffect(() => {
+    // When a subtask checks, update progress bar and update todo with updated subtasks
     const totalCheckedSubtasks = subtasks.filter(
       (subtask) => subtask.isChecked
     ).length;
@@ -22,7 +23,7 @@ const TodoDetail = () => {
 
 
   const handleSubtask = (index) => {
-    // Changes current indexed subtask to !isChecked
+    // Toggle checks current indexed subtask to !isChecked
     setSubtasks(
       [...subtasks].map((s, i) =>
         i === index ? { ...s, isChecked: !s.isChecked } : s
@@ -31,7 +32,7 @@ const TodoDetail = () => {
   };
 
   const repeatTask = () => {
-    // Changes current indexed subtask to !isChecked
+    // Changes all subtasks to unChecked to reset task
     setSubtasks([...subtasks].map((s) => ({...s, isChecked: false })));
   }
 
@@ -43,31 +44,15 @@ const TodoDetail = () => {
       <ul>
         {subtasks.map((subtask, index) => (
           <>
-            <div
-              style={{
-                textDecoration: subtask.isChecked ? "line-through" : "",
-              }}
-            >
+            <div style={{textDecoration: subtask.isChecked ? "line-through" : ""}}>
               {subtask.text}
-              <button
-                type="button"
-                onClick={(e) => {
-                  handleSubtask(index);
-                }}
-              >
-                Check
-              </button>
+              <button type="button" onClick={(e) => {handleSubtask(index)}}>Check</button>
             </div>
             <br />
           </>
         ))}
       </ul>
-      <button
-        type="button"
-        onClick={repeatTask}
-      >
-        Repeat Task
-      </button>
+      <button type="button" onClick={repeatTask}>Repeat Task</button>
     </div>
   );
 };
