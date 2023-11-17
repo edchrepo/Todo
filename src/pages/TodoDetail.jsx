@@ -46,7 +46,7 @@ const TodoDetail = () => {
           <>
             <div style={{textDecoration: subtask.isChecked ? "line-through" : ""}}>
               {subtask.text}
-              <button type="button" onClick={(e) => {handleSubtask(index)}}>Check</button>
+              <button type="button" onClick={(e) => {handleSubtask(index)}}>&#10003;</button>
             </div>
             <br />
           </>

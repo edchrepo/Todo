@@ -19,10 +19,15 @@ function Todo({ todo }) {
   }, [todo]);
 
   useEffect(() => {
-    const totalCheckedSubtasks = todo.subtasks.filter(
-      (subtask) => subtask.isChecked
-    ).length;
-    setProgress(Math.floor((totalCheckedSubtasks / todo.subtasks.length) * 100));
+    if (todo.subtasks.length == 0) {
+      setProgress(0)
+    }
+    else {
+      const totalCheckedSubtasks = todo.subtasks.filter(
+        (subtask) => subtask.isChecked
+      ).length;
+      setProgress(Math.floor((totalCheckedSubtasks / todo.subtasks.length) * 100));
+    }
   }, [todo.subtasks]);
 
   function getLabelForNumber(number) {
