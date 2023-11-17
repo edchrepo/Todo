@@ -90,7 +90,7 @@ const TodoDetail = () => {
                 textDecoration: subtask.isChecked ? "line-through" : "",
               }}
             >
-              {subtask.subtask}
+              {subtask.text}
               <button
                 type="button"
                 onClick={(e) => {

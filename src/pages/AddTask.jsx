@@ -6,7 +6,7 @@ import "../styles.css";
 function AddTask() {
   const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false };
   const [todoData, setTodoData] = useState(initialState);
-  const [subtask, setSubtask] = useState({subtask: "", isChecked: false});
+  const [subtask, setSubtask] = useState({text: "", isChecked: false});
   const [subtasks, setSubtasks] = useState([]);
   const { addTodo } = useTodo();
   const navigate = useNavigate();
@@ -22,12 +22,13 @@ function AddTask() {
     navigate("/");
   };
 
-  const addSubTask = () => {
+  const addSubtask = () => {
+    if (!subtask.text) return;
     setSubtasks([...subtasks, subtask]);
-    setSubtask("");
+    setSubtask({ text: "", isChecked: false });
   }
 
-  const removeSubTask = (task) => {
+  const removeSubtask = (task) => {
     setSubtasks([...subtasks].filter((s) => s != task));
   }
 
@@ -96,10 +97,10 @@ function AddTask() {
                 key={index}
                 type="text"
                 name="subtask"
-                value={subtask.subtask}
-                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? e.target.value : s.subtask)))}
+                value={subtask.text}
+                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? {...s, text: e.target.value} : s)))}
               />
-              <button type="button" onClick={() => removeSubTask(subtask)}>
+              <button type="button" onClick={() => removeSubtask(subtask)}>
                 x
               </button>
               <br/>
@@ -110,11 +111,11 @@ function AddTask() {
           <input
             type="text"
             name="subtasks"
-            value={subtask.subtask}
+            value={subtask.text}
             placeholder="Add New Subtask..."
-            onChange={(e) => setSubtask({...subtask, subtask: e.target.value})}
+            onChange={(e) => setSubtask({...subtask, text: e.target.value})}
           />
-          <button type="button" onClick={addSubTask}>
+          <button type="button" onClick={addSubtask}>
             +
           </button>
         </div>
