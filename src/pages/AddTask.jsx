@@ -102,7 +102,7 @@ function AddTask() {
                 type="text"
                 name="subtask"
                 value={subtask}
-                onChange={(e) => setSubtasks([...subtasks].map((s) => s === subtask ? e.target.value : s))}
+                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? e.target.value : s)))}
               />
               <button type="button" onClick={() => removeSubTask(subtask)}>
                 x
