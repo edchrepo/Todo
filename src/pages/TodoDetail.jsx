@@ -11,6 +11,7 @@ const TodoDetail = () => {
   const [progress, setProgress] = useState(0);
   const todo = getTodo(id);
   const todoDate = todo.date ? new Date(`${todo.date}T${todo.time || '00:00:00'}`) : 0;
+  const [subtasks, setSubtasks] = useState(todo.subtasks);
 
 
   if (!todo) return <div>No todo found</div>;
@@ -18,6 +19,11 @@ const TodoDetail = () => {
   useEffect(() => {
     handleColor();
   }, [todo]);
+
+  useEffect(() => {
+    const totalCheckedSubtasks = subtasks.filter(subtask => subtask.isChecked).length;
+    setProgress(Math.floor((totalCheckedSubtasks / subtasks.length) * 100))
+  }, [subtasks])
 
   function getLabelForNumber(number) {
     if (number >= 1 && number <= 3) {
@@ -45,9 +51,8 @@ const TodoDetail = () => {
     }
   }
 
-  const handleSubtask = () => {
-    setProgress(15);
-    console.log(progress);
+  const handleSubtask = (index) => {
+    setSubtasks([...subtasks].map((s, i) => (i === index ? {...s, isChecked: !s.isChecked} : s)))
   }
 
   return (
@@ -65,11 +70,11 @@ const TodoDetail = () => {
         <ProgressBar progress={progress}/>
         <p>Checklist for subtasks</p>
         <ul>
-          {todo.subtasks.map((subtask) => (
+          {subtasks.map((subtask, index) => (
             <>
-              <div style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
-                {subtask}
-                <button type="button" onClick={() => {}}>
+              <div style={{ textDecoration: subtask.isChecked ? "line-through" : "" }}>
+                {subtask.subtask}
+                <button type="button" onClick={(e) => {handleSubtask(index)}}>
                   Check
                 </button>
               </div>

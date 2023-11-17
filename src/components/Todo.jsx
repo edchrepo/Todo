@@ -41,7 +41,7 @@ function Todo({ todo }) {
         <button onClick={() => removeTodo(todo)}>x</button>
         <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
       </div>
-      <ProgressBar progress={50}/>
+      <ProgressBar progress={15}/>
     </div>
   );
 }

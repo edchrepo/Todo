@@ -6,7 +6,7 @@ import "../styles.css";
 function AddTask() {
   const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false };
   const [todoData, setTodoData] = useState(initialState);
-  const [subtask, setSubtask] = useState("");
+  const [subtask, setSubtask] = useState({subtask: "", isChecked: false});
   const [subtasks, setSubtasks] = useState([]);
   const { addTodo } = useTodo();
   const navigate = useNavigate();
@@ -96,8 +96,8 @@ function AddTask() {
                 key={index}
                 type="text"
                 name="subtask"
-                value={subtask}
-                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? e.target.value : s)))}
+                value={subtask.subtask}
+                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? e.target.value : s.subtask)))}
               />
               <button type="button" onClick={() => removeSubTask(subtask)}>
                 x
@@ -110,9 +110,9 @@ function AddTask() {
           <input
             type="text"
             name="subtasks"
-            value={subtask}
+            value={subtask.subtask}
             placeholder="Add New Subtask..."
-            onChange={(e) => setSubtask(e.target.value)}
+            onChange={(e) => setSubtask({...subtask, subtask: e.target.value})}
           />
           <button type="button" onClick={addSubTask}>
             +

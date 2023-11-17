@@ -8,7 +8,7 @@ function EditTask() {
   const { id } = useParams();
 
   const todoEdit = initialTodos.find((t) => t.id == id)
-  const [subtask, setSubtask] = useState("");
+  const [subtask, setSubtask] = useState({ subtask: "", isChecked: false });
   const [subtasks, setSubtasks] = useState(todoEdit.subtasks);
   const [todo, setTodo] = useState(todoEdit);
   const { editTodo } = useTodo();
@@ -21,17 +21,13 @@ function EditTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todo) return;
-
-    // handle datetime converion before adding todo to list of todos
-    const dateTimeString = todo.date + 'T' + todo.time;
-
-    editTodo({...todo, dueDate: dateTimeString, subtasks: subtasks});
+    editTodo({...todo, subtasks: subtasks});
     navigate("/");
   };
 
   const addSubTask = () => {
     setSubtasks([...subtasks, subtask]);
-    setSubtask("");
+    setSubtask({ subtask: "", isChecked: false });
   }
 
   const removeSubTask = (task) => {
@@ -108,8 +104,8 @@ function EditTask() {
                 key={index}
                 type="text"
                 name="subtask"
-                value={subtask}
-                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? e.target.value : s)))}
+                value={subtask.subtask}
+                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? {...s, subtask: e.target.value} : s)))}
               />
               <button type="button" onClick={() => removeSubTask(subtask)}>
                 x
@@ -122,9 +118,9 @@ function EditTask() {
           <input
             type="text"
             name="subtasks"
-            value={subtask}
+            value={subtask.subtask}
             placeholder="Add New Subtask..."
-            onChange={(e) => setSubtask(e.target.value)}
+            onChange={(e) => setSubtask({...subtask, subtask: e.target.value})}
           />
           <button type="button" onClick={addSubTask}>
             +
