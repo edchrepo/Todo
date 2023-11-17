@@ -3,8 +3,10 @@ import { useTodo } from "../contexts/todoContext";
 import { Link } from "react-router-dom";
 import "../styles.css";
 
-const Home = () => {
+function Home() {
   const { todos, displayedTodos, setSearchTerm, setSort, setFilterTags} = useTodo();
+  const tags = new Set();
+  todos.forEach((t) => t.tags.split(',').forEach((tag) => tags.add(tag.trim())))
 
   return (
     <div className = "homeDiv">
@@ -31,8 +33,8 @@ const Home = () => {
             <p>Category</p>
             <select onChange={(e) => setFilterTags(e.target.value)}>
               <option value="">Default</option>
-              {todos.map((todo, index) => todo.tags ? 
-                <option key={index} value={todo.tags}>{todo.tags}</option> : null
+              {[...tags].map((tag, index) =>
+                <option key={index} value={tag}>{tag}</option>
               )}
             </select>
           </div>

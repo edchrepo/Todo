@@ -15,6 +15,10 @@ export const TodoProvider = ({ children }) => {
   const [filterTags, setFilterTags] = useState("");
   const [sort, setSort] = useState("");
 
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
   const displayedTodos = [...todos]
   .filter((t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags))
   .sort((a, b) => {
@@ -31,16 +35,10 @@ export const TodoProvider = ({ children }) => {
         return a.priority - b.priority;
       case 'Descending Priority':
         return b.priority - a.priority;
-      // Add more cases as needed
       default:
-        // Default sorting logic (if none of the cases match)
         return 0;
     }
   });
-
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {...todo, id : uid()}];
