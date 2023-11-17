@@ -9,6 +9,9 @@ function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
   const [progress, setProgress] = useState(0)
+  const todoDate = todo.date
+  ? new Date(`${todo.date}T${todo.time || "00:00:00"}`)
+  : 0;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +24,18 @@ function Todo({ todo }) {
     ).length;
     setProgress(Math.floor((totalCheckedSubtasks / todo.subtasks.length) * 100));
   }, [todo.subtasks]);
+
+  function getLabelForNumber(number) {
+    if (number >= 1 && number <= 3) {
+      return "Low";
+    } else if (number >= 4 && number <= 7) {
+      return "Medium";
+    } else if (number >= 8 && number <= 10) {
+      return "High";
+    } else {
+      return "";
+    }
+  }
 
   const handleColor = () => {
     const todoDate = todo.date ? new Date(`${todo.date}T${todo.time || '00:00:00'}`) : 0;
@@ -38,18 +53,27 @@ function Todo({ todo }) {
   }
 
   return (
-    <div
-      className="todo"
-      style={{ width: "33%", textDecoration: todo.isCompleted ? "line-through" : "" }}
+    <div className="todo"
+      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
     >
-      <span style={{backgroundColor: colorLabel}}/>
-      <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
-      <div>
-        <button onClick={() => completeTodo(todo)}>Complete</button>
-        <button onClick={() => removeTodo(todo)}>x</button>
-        <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
+      <div className="todoTop">
+        <span style={{backgroundColor: colorLabel}}/>
+        <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
+        <div>
+          <button onClick={() => completeTodo(todo)}>Complete</button>
+          <button onClick={() => removeTodo(todo)}>x</button>
+          <button onClick={() => navigate(`/editTask/${todo.id}`)}>Edit</button>
+        </div>
       </div>
-      <ProgressBar progress={progress}/>
+      {`Due Date: ${todoDate.toLocaleString("en-US", { timeZone: "EST" })}`}
+      <br />
+      {`Priority: ${getLabelForNumber(todo.priority)}(${todo.priority}/10)`}
+      <br />
+      {`Complexity: ${getLabelForNumber(todo.complexity)}(${
+        todo.complexity
+      }/10)`}
+      <p>Task Completed: </p>
+      <ProgressBar progress={progress} />
     </div>
   );
 }

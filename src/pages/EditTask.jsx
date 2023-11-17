@@ -139,7 +139,7 @@ function EditTask() {
             }}
           />
       </div>
-      <button type="submit">Edit Task</button>
+      <button type="submit">Save Task</button>
     </form>
 
   );
