@@ -20,24 +20,24 @@ export const TodoProvider = ({ children }) => {
   }, [todos]);
 
   const displayedTodos = [...todos]
-  .filter((t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags))
-  .sort((a, b) => {
-    switch (sort) {
-      case 'Ascending Date':
-        return new Date(a.dueDate) - new Date(b.dueDate);
-      case 'Descending Date':
-        return new Date(b.dueDate) - new Date(a.dueDate);
-      case 'Ascending Complexity':
-        return a.complexity - b.complexity;
-      case 'Descending Complexity':
-        return b.complexity - a.complexity;
-      case 'Ascending Priority':
-        return a.priority - b.priority;
-      case 'Descending Priority':
-        return b.priority - a.priority;
-      default:
-        return 0;
-    }
+    .filter((t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags))
+    .sort((a, b) => {
+      switch (sort) {
+        case 'Ascending Date':
+          return new Date(`${a.date}T${a.time || '00:00:00'}`) - new Date(`${b.date}T${b.time || '00:00:00'}`);
+        case 'Descending Date':
+          return new Date(`${b.date}T${b.time || '00:00:00'}`) - new Date(`${a.date}T${a.time || '00:00:00'}`);
+        case 'Ascending Complexity':
+          return a.complexity - b.complexity;
+        case 'Descending Complexity':
+          return b.complexity - a.complexity;
+        case 'Ascending Priority':
+          return a.priority - b.priority;
+        case 'Descending Priority':
+          return b.priority - a.priority;
+        default:
+          return 0;
+      }
   });
 
   const addTodo = (todo) => {

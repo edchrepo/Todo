@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import "../styles.css";
 
 function AddTask() {
-  const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", sCompleted: false };
+  const initialState = { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false };
   const [todoData, setTodoData] = useState(initialState);
   const [subtask, setSubtask] = useState("");
   const [subtasks, setSubtasks] = useState([]);
@@ -18,12 +18,7 @@ function AddTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todoData) return;
-
-    // handle datetime converion before adding todo to list of todos
-
-    const dateTimeString = `${todoData.date}T${todoData.time || '00:00:00'}`;
-
-    addTodo({...todoData, dueDate: dateTimeString, subtasks: subtasks});
+    addTodo({...todoData, subtasks: subtasks});
     navigate("/");
   };
 
