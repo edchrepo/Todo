@@ -69,6 +69,7 @@ export const TodoProvider = ({ children }) => {
 
   const removeTodo = (todo) => {
     setTodos((todos) => todos.filter((t) => t.id !== todo.id));
+    if(power) setPower(!power);
   };
 
   const getTodo = (id) => {
