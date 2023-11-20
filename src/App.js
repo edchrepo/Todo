@@ -8,8 +8,8 @@ import { TodoProvider } from "./contexts/todoContext";
 function App() {
   return (
     <Router>
-      <nav>
-        <Link to="/">Home</Link>
+      <nav className="flex justify-center font-bold">
+        <Link to="/">🏠</Link>
       </nav>
       <TodoProvider>
         <Routes>

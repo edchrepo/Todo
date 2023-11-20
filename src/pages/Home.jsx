@@ -20,16 +20,17 @@ function Home() {
   );
 
   return (
-    <div className="homeDiv">
+    <div className="px-[30%]">
       <input
         type="text"
+        className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"
         placeholder="Search..."
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="sortcategory">
-        <div className="sort">
-          <p>Sort</p>
-          <select className="selectsort" onChange={(e) => setSort(e.target.value)}>
+      <div className="flex justify-between">
+        <div className="w-[50%]">
+          <p className="font-bold">Sort</p>
+          <select className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5" onChange={(e) => setSort(e.target.value)}>
             <option value="">Default</option>
             <option value="Ascending Date">Ascending Date</option>
             <option value="Descending Date">Descending Date</option>
@@ -39,9 +40,9 @@ function Home() {
             <option value="Descending Priority">Descending Priority</option>
           </select>
         </div>
-        <div className="filter">
-          <p>Category</p>
-          <select className="categorysort" onChange={(e) => setFilterTags(e.target.value)}>
+        <div className="w-[50%]">
+          <p className="font-bold">Category</p>
+          <select className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5" onChange={(e) => setFilterTags(e.target.value)}>
             <option value="">Default</option>
             {[...tags].map((tag, index) => (
               <option key={index} value={tag}>{tag}</option>
@@ -54,10 +55,12 @@ function Home() {
         {power ? (<Todo key={powerTodo.id} todo={powerTodo} />) 
         : (displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />))}
       </div>
-      <button onClick={() => togglePower()}>{`Power ${!power ? "On" : "Off"}`}</button>
-      <Link to={"/addTask"}>
-        <button>Add New Task</button>
-      </Link>
+      <div className="flex justify-center space-x-2 mb-5 pb-10">
+        <button className="bg-[#0d99ff] rounded-full p-4 text-white" onClick={() => togglePower()}>{`Power ${!power ? "On ⚡" : "Off"}`}</button>
+        <Link to={"/addTask"}>
+          <button className="bg-[#0d99ff] rounded-full p-4 text-white">+ Add New Task</button>
+        </Link>
+      </div>
     </div>
   );
 }

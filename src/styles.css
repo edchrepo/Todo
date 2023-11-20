@@ -5,28 +5,4 @@
 body {
   background-color: #f5f5f5;
   font-family: sans-serif;
-  /* display: flex;
-  justify-content: center; */
 }
-
-/* .datetime {
-  display: flex;
-} */
-
-
-/* ------------- Home styles ------------- */
-
-/* .sortcategory {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sort, .filter {
-  width: 50%;
-}
-
-.selectsort, .categorysort {
-  width: 100%
-} */
-
-/*-------------- Todo Styles -----------------*/

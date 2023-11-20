@@ -60,111 +60,131 @@ function TaskForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p>{!todoEdit ? "Add New Task" : "Edit Task"}</p>
-      <p>Task Name</p>
-      <input
-        type="text"
-        className="input"
-        name="todoName"
-        value={todo.todoName}
-        onChange={handleChange}
-      />
-      <div>
-        <p>Select Priority Level</p>
-          {optionLevels.map((level) => (
-            <label key={level}>
-              <input
-                type="radio"
-                name="priority"
-                value={level}
-                checked={todo.priority == level ? true : false}
-                onChange={handleChange}
-              />
-              {level}
-            </label>
-          ))}
-      </div>  
-      <div>
-        <p>Select Complexity Level</p>
-          {optionLevels.map((level) => (
-            <label key={level}>
-              <input
-                type="radio"
-                name="complexity"
-                value={level}
-                checked={todo.complexity == level ? true : false}
-                onChange={handleChange}
-              />
-              {level}
-            </label>
-          ))}
-      </div>  
-      <div className="datetime">
+    <div className="px-[30%] flex justify-center">
+      <form onSubmit={handleSubmit}>
+        <p className="text-center font-bold mb-2">{!todoEdit ? "Add New Task" : "Edit Task"}</p>
+        <p>Task Name</p>
+        <input
+          type="text"
+          className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"
+          name="todoName"
+          value={todo.todoName}
+          onChange={handleChange}
+        />
         <div>
-          <p>Select Date</p>
-          <input
-            type="date"
-            name="date"
-            value={todo.date ? todo.date : ""}
-            onChange={handleChange}
-          />
+          <p className="my-2">Select Priority Level</p>
+            {optionLevels.map((level) => (
+              <label className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${todo.priority == level ? 'bg-blue-300' : ''}`} key={level}>
+                <input
+                  type="radio"
+                  name="priority"
+                  className="absolute opacity-0 cursor-pointer"
+                  value={level}
+                  checked={todo.priority == level ? true : false}
+                  onChange={handleChange}
+                />
+                <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+                  {level}
+                </span>
+              </label>
+            ))}
+        </div>  
+        <div>
+          <p className="my-2">Select Complexity Level</p>
+            {optionLevels.map((level) => (
+              <label className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${todo.complexity == level ? 'bg-blue-300' : ''}`} key={level}>
+                <input
+                  type="radio"
+                  name="complexity"
+                  className="absolute opacity-0 cursor-pointer"
+                  value={level}
+                  checked={todo.complexity == level ? true : false}
+                  onChange={handleChange}
+                />
+                <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+                  {level}
+                </span>
+              </label>
+            ))}
+        </div>  
+        <div className="w-[100%] flex justify-between mt-5">
+          <div>
+            <p className="mb-2">Select Date</p>
+            <input
+              type="date"
+              name="date"
+              className="border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"
+              value={todo.date ? todo.date : ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+          <p className="mb-2">Select Time</p>
+            <input
+              type="time"
+              name="time"
+              className="border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"
+              value={todo.time ? todo.time : ""}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <div>
-        <p>Select Time</p>
-          <input
-            type="time"
-            name="time"
-            value={todo.time ? todo.time : ""}
-            onChange={handleChange}
-          />
+          <p className="my-5">Add CheckList For Subtasks</p>
+          <ul>
+            {subtasks.map((subtask) => (
+              <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between" key={subtask.id}>
+                <input 
+                  key={subtask.id}
+                  type="text"
+                  name="subtask"
+                  className="flex-grow"
+                  value={subtask.text}
+                  onChange={(e) => handleSubtaskChange(e, subtask.id)}
+                />
+                <button className="bg-red-500 h-8 w-8 rounded-full text-white" 
+                        type="button" 
+                        onClick={() => removeSubtask(subtask)}>
+                  x
+                </button>
+                <br/>
+              </div>
+            ))}
+          </ul>
+          <div>
+            <form type="submit" onSubmit={addSubtask}>
+              <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between" key={subtask.id}>
+                <input
+                  type="text"
+                  name="subtasks"
+                  value={subtask.text}
+                  placeholder="Add New Subtask..."
+                  onChange={(e) => setSubtask({...subtask, text: e.target.value})}
+                />
+                <button className="bg-[#0d99ff] h-8 w-8 rounded-full text-white" 
+                        type="submit" 
+                        onClick={addSubtask}>
+                  +
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-      <div>
-        <p>Add CheckList For Subtasks</p>
-        <ul>
-          {subtasks.map((subtask) => (
-            <React.Fragment key={subtask.id}>
-              <input 
-                key={subtask.id}
-                type="text"
-                name="subtask"
-                value={subtask.text}
-                onChange={(e) => handleSubtaskChange(e, subtask.id)}
-              />
-              <button type="button" onClick={() => removeSubtask(subtask)}>
-                x
-              </button>
-              <br/>
-            </React.Fragment>
-          ))}
-        </ul>
         <div>
-          <form type="submit" onSubmit={addSubtask}>
+          <p className="my-5">Add Tags</p>
             <input
               type="text"
-              name="subtasks"
-              value={subtask.text}
-              placeholder="Add New Subtask..."
-              onChange={(e) => setSubtask({...subtask, text: e.target.value})}
+              name="tags"
+              className="bg-white w-[100%] rounded-full p-2 mb-5"
+              value={todo.tags}
+              onChange={handleChange}
             />
-            <button type="submit" onClick={addSubtask}>
-              +
-            </button>
-          </form>
         </div>
-      </div>
-      <div>
-        <p>Add Tags</p>
-          <input
-            type="text"
-            name="tags"
-            value={todo.tags}
-            onChange={handleChange}
-          />
-      </div>
-      <button type="submit">{!todoEdit ? "Create Task" : "Update Task"}</button>
-    </form>
+        <div className="flex justify-center">
+          <button className="bg-[#0d99ff] rounded-full p-4 text-white" type="submit">{!todoEdit ? "Create Task" : "Update Task"}</button>
+        </div>
+      </form>
+    </div>
 
   );
 }

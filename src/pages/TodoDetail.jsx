@@ -30,22 +30,24 @@ const TodoDetail = () => {
   }
 
   return (
-    <div>
-      <p>Task Details</p>
+    <div className="px-[30%]">
+      <p className="justify-center text-center font-bold">Task Details</p>
       <Todo todo={todo}/>
-      <p>Checklist for subtasks</p>
+      <p className="mb-5">Checklist for subtasks</p>
       <ul>
         {subtasks.map((subtask) => (
-          <React.Fragment key={subtask.id}>
-            <div style={{textDecoration: subtask.isChecked ? "line-through" : ""}}>
-              {subtask.text}
-              <button type="button" onClick={(e) => {handleSubtask(subtask.id)}}>&#10003;</button>
-            </div>
-            <br/>
-          </React.Fragment>
+          <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between items-center" key={subtask.id}>
+            <span>{subtask.text}</span>
+            <button className= "rounded-[50%] h-[32px] w-[32px]" 
+                    style={{backgroundColor: subtask.isChecked ? "#0d99ff" : "#90CAF9"}} 
+                    type="button" 
+                    onClick={(e) => {handleSubtask(subtask.id)}}>&#10003;</button>
+          </div>
         ))}
       </ul>
-      <button type="button" onClick={repeatTask}>Repeat Task</button>
+      <div className="flex justify-center">
+        <button className="bg-[#0d99ff] rounded-full p-4 text-white" type="button" onClick={repeatTask}>Repeat Task</button>
+      </div>
     </div>
   );
 };
