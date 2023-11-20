@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   background-color: #f5f5f5;
   font-family: sans-serif;
@@ -5,14 +9,14 @@ body {
   justify-content: center;
 }
 
-.datetime {
+/* .datetime {
   display: flex;
-}
+} */
 
 
 /* ------------- Home styles ------------- */
 
-.sortcategory {
+/* .sortcategory {
   display: flex;
   justify-content: space-between;
 }
@@ -23,7 +27,7 @@ body {
 
 .selectsort, .categorysort {
   width: 100%
-}
+} */
 
 /*-------------- Todo Styles -----------------*/
 

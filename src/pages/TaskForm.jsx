@@ -5,13 +5,12 @@ import { uid } from "uid";
 import "../styles.css";
 
 function TaskForm() {
-  const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const { id } = useParams();
   const { addTodo, editTodo, getTodo } = useTodo();
   const todoEdit = getTodo(id);
   const [subtask, setSubtask] = useState({id: uid(), text: "", isChecked: false });
   const [subtasks, setSubtasks] = useState(todoEdit ? todoEdit.subtasks : []);
-  const [todo, setTodo] = useState(todoEdit ? todoEdit : { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false })
+  const [todo, setTodo] = useState(todoEdit ? todoEdit : { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false, subtasks: []})
   const navigate = useNavigate();
   const optionLevels = [1,2,3,4,5,6,7,8,9,10];
 

@@ -6,21 +6,14 @@ import React, { useState, useEffect } from "react";
 const TodoDetail = () => {
   const { id } = useParams();
   const { getTodo, editTodo } = useTodo();
-  const [progress, setProgress] = useState(0);
   const todo = getTodo(id);
   const [subtasks, setSubtasks] = useState(todo.subtasks);
 
   if (!todo) return <div>No todo found</div>;
 
   useEffect(() => {
-    // When a subtask checks, update progress bar and update todo with updated subtasks
-    const totalCheckedSubtasks = subtasks.filter(
-      (subtask) => subtask.isChecked
-    ).length;
-    setProgress(Math.floor((totalCheckedSubtasks / subtasks.length) * 100));
     editTodo({...todo, subtasks: subtasks})
   }, [subtasks]);
-
 
   const handleSubtask = (id) => {
     // Toggle checks current subtask id to !isChecked

@@ -8,7 +8,6 @@ import "../styles.css";
 function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
-  const [progress, setProgress] = useState(0)
   const todoDate = todo.date
   ? new Date(`${todo.date}T${todo.time || "00:00:00"}`)
   : 0;
@@ -17,18 +16,6 @@ function Todo({ todo }) {
   useEffect(() => {
     handleColor();
   }, [todo]);
-
-  useEffect(() => {
-    if (todo.subtasks.length == 0) {
-      setProgress(0)
-    }
-    else {
-      const totalCheckedSubtasks = todo.subtasks.filter(
-        (subtask) => subtask.isChecked
-      ).length;
-      setProgress(Math.floor((totalCheckedSubtasks / todo.subtasks.length) * 100));
-    }
-  }, [todo.subtasks]);
 
   function getLabelForNumber(number) {
     if (number >= 1 && number <= 3) {
@@ -77,7 +64,8 @@ function Todo({ todo }) {
       <br />
       {`Complexity: ${getLabelForNumber(todo.complexity)}(${todo.complexity}/10)`}
       <p>Task Completed: </p>
-      <ProgressBar progress={progress} />
+      <ProgressBar progress={Math.floor((todo.subtasks.filter((subtask) => subtask.isChecked
+        ).length / todo.subtasks.length) * 100) || 0} />
     </div>
   );
 }
