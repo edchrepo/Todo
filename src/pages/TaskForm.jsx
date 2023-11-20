@@ -4,14 +4,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import { uid } from "uid";
 import "../styles.css";
 
-function EditTask() {
+function TaskForm() {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const { id } = useParams();
-  const todoEdit = initialTodos.find((t) => t.id == id)
+  const { addTodo, editTodo, getTodo } = useTodo();
+  const todoEdit = getTodo(id);
   const [subtask, setSubtask] = useState({id: uid(), text: "", isChecked: false });
-  const [subtasks, setSubtasks] = useState(todoEdit.subtasks);
-  const [todo, setTodo] = useState(todoEdit);
-  const { editTodo } = useTodo();
+  const [subtasks, setSubtasks] = useState(todoEdit ? todoEdit.subtasks : []);
+  const [todo, setTodo] = useState(todoEdit ? todoEdit : { todoName: "", priority: 0, complexity: 0, date: 0, time: 0, tags: "", isCompleted: false })
   const navigate = useNavigate();
   const optionLevels = [1,2,3,4,5,6,7,8,9,10];
 
@@ -22,7 +22,12 @@ function EditTask() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todo) return;
-    editTodo({...todo, subtasks: subtasks});
+    if (addForm) {
+      addTodo({...todoData, subtasks: subtasks});
+    }
+    else {
+      editTodo({...todo, subtasks: subtasks});
+    }
     navigate("/");
   };
 
@@ -39,6 +44,8 @@ function EditTask() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p>{!todoEdit ? "Add New Task" : "Edit Task"}</p>
+      <p>Task Name</p>
       <input
         type="text"
         className="input"
@@ -139,10 +146,10 @@ function EditTask() {
             onChange={handleChange}
           />
       </div>
-      <button type="submit">Save Task</button>
+      <button type="submit">{!todoEdit ? "Create Task" : "Update Task"}</button>
     </form>
 
   );
 }
 
-export default EditTask;
+export default TaskForm;
