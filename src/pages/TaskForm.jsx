@@ -23,7 +23,7 @@ function TaskForm() {
     e.preventDefault();
     if (!todo) return;
     if (!todoEdit) {
-      addTodo({...todoData, subtasks: subtasks});
+      addTodo({...todo, subtasks: subtasks});
     }
     else {
       editTodo({...todo, subtasks: subtasks});
