@@ -40,6 +40,14 @@ function TaskForm() {
     navigate("/");
   };
 
+  const handleSubtaskChange = (e, subtaskId) => {
+    setSubtasks((prevSubtasks) =>
+      prevSubtasks.map((s) =>
+        s.id === subtaskId ? { ...s, text: e.target.value } : s
+      )
+    );
+  };
+
   const addSubtask = (e) => {
     e.preventDefault(); 
     if (!subtask.text) return;
@@ -122,7 +130,7 @@ function TaskForm() {
                 type="text"
                 name="subtask"
                 value={subtask.text}
-                onChange={(e) => setSubtasks((prevSubtasks) => prevSubtasks.map((s) => (s.id === subtask.id ? { ...s, text: e.target.value } : s)))}
+                onChange={(e) => handleSubtaskChange(e, subtask.id)}
               />
               <button type="button" onClick={() => removeSubtask(subtask)}>
                 x
