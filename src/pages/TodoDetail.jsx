@@ -22,11 +22,11 @@ const TodoDetail = () => {
   }, [subtasks]);
 
 
-  const handleSubtask = (index) => {
-    // Toggle checks current indexed subtask to !isChecked
+  const handleSubtask = (id) => {
+    // Toggle checks current subtask id to !isChecked
     setSubtasks(
-      [...subtasks].map((s, i) =>
-        i === index ? { ...s, isChecked: !s.isChecked } : s
+      [...subtasks].map((s) =>
+        s.id == id ? { ...s, isChecked: !s.isChecked } : s
       )
     );
   };
@@ -42,11 +42,11 @@ const TodoDetail = () => {
       <Todo todo={todo}/>
       <p>Checklist for subtasks</p>
       <ul>
-        {subtasks.map((subtask, index) => (
-          <React.Fragment key={index}>
+        {subtasks.map((subtask) => (
+          <React.Fragment key={subtask.id}>
             <div style={{textDecoration: subtask.isChecked ? "line-through" : ""}}>
               {subtask.text}
-              <button type="button" onClick={(e) => {handleSubtask(index)}}>&#10003;</button>
+              <button type="button" onClick={(e) => {handleSubtask(subtask.id)}}>&#10003;</button>
             </div>
             <br/>
           </React.Fragment>

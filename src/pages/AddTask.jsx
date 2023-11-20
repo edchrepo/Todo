@@ -11,7 +11,7 @@ function AddTask() {
   const [subtasks, setSubtasks] = useState([]);
   const { addTodo } = useTodo();
   const navigate = useNavigate();
-  const optionLevels = [1,2,3,4,5,6,7,8,9,10]
+  const optionLevels = [1,2,3,4,5,6,7,8,9,10];
 
   const handleChange = (e) => {
     setTodoData({...todoData, [e.target.name]: e.target.value})
@@ -92,14 +92,14 @@ function AddTask() {
       <div>
         <p>Add CheckList For Subtasks</p>
         <ul>
-          {subtasks.map((subtask, index) => (
+          {subtasks.map((subtask) => (
             <React.Fragment key={subtask.id}>
               <input 
-                key={index}
+                key={subtask.id}
                 type="text"
                 name="subtask"
                 value={subtask.text}
-                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? {...s, text: e.target.value} : s)))}
+                onChange={(e) => setSubtasks((prevSubtasks) => prevSubtasks.map((s) => (s.id === subtask.id ? { ...s, text: e.target.value } : s)))}
               />
               <button type="button" onClick={() => removeSubtask(subtask)}>
                 x

@@ -7,13 +7,13 @@ import "../styles.css";
 function EditTask() {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const { id } = useParams();
-
   const todoEdit = initialTodos.find((t) => t.id == id)
   const [subtask, setSubtask] = useState({id: uid(), text: "", isChecked: false });
   const [subtasks, setSubtasks] = useState(todoEdit.subtasks);
   const [todo, setTodo] = useState(todoEdit);
   const { editTodo } = useTodo();
   const navigate = useNavigate();
+  const optionLevels = [1,2,3,4,5,6,7,8,9,10];
 
   const handleChange = (e) => {
     setTodo({...todo, [e.target.name]: e.target.value})
@@ -48,7 +48,7 @@ function EditTask() {
       />
       <div>
         <p>Select Priority Level</p>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+          {optionLevels.map((level) => (
             <label key={level}>
               <input
                 type="radio"
@@ -63,7 +63,7 @@ function EditTask() {
       </div>  
       <div>
         <p>Select Complexity Level</p>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+          {optionLevels.map((level) => (
             <label key={level}>
               <input
                 type="radio"
@@ -99,14 +99,14 @@ function EditTask() {
       <div>
         <p>Add CheckList For Subtasks</p>
         <ul>
-          {subtasks.map((subtask, index) => (
+          {subtasks.map((subtask) => (
             <React.Fragment key={subtask.id}>
               <input 
-                key={index}
+                key={subtask.id}
                 type="text"
                 name="subtask"
                 value={subtask.text}
-                onChange={(e) => setSubtasks([...subtasks].map((s, i) => (i === index ? {...s, text: e.target.value} : s)))}
+                onChange={(e) => setSubtasks((prevSubtasks) => prevSubtasks.map((s) => (s.id === subtask.id ? { ...s, text: e.target.value } : s)))}
               />
               <button type="button" onClick={() => removeSubtask(subtask)}>
                 x
