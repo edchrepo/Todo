@@ -45,9 +45,9 @@ function Todo({ todo }) {
   }
 
   return (
-    <div className="todo" style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
-      <div className="todoTop">
-        <span style={{backgroundColor: colorLabel}}/>
+    <div className="border p-2.5 border-solid border-[#ccc] rounded-lg mb-2.5" style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
+      <div className="flex">
+        <span className="h-[15px] w-[15px] inline-block rounded-[50%]" style={{backgroundColor: colorLabel}}/>
         <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link>
         <div className="grow"/>
         <div>

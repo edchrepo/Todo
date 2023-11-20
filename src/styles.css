@@ -5,8 +5,8 @@
 body {
   background-color: #f5f5f5;
   font-family: sans-serif;
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
 }
 
 /* .datetime {
@@ -30,29 +30,3 @@ body {
 } */
 
 /*-------------- Todo Styles -----------------*/
-
-.todo {
-  border: 1px solid #ccc; 
-  padding: 10px; 
-  border-Radius: 8px; 
-  margin-Bottom: 10px;
-}
-
-.todoTop {
-  display: flex;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-ul {
-  padding: 0;
-}
-
-span {
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  display: inline-block;
-}
