@@ -10,6 +10,7 @@ function AddTask() {
   const [subtasks, setSubtasks] = useState([]);
   const { addTodo } = useTodo();
   const navigate = useNavigate();
+  const optionLevels = [1,2,3,4,5,6,7,8,9,10]
 
   const handleChange = (e) => {
     setTodoData({...todoData, [e.target.name]: e.target.value})
@@ -38,19 +39,17 @@ function AddTask() {
         type="text"
         className="input"
         name="todoName"
-        onChange={(event) => {
-            handleChange(event);
-        }}
+        onChange={handleChange}
       />
       <div>
         <p>Select Priority Level</p>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+          {optionLevels.map((level) => (
             <label key={level}>
               <input
                 type="radio"
                 name="priority"
                 value={level}
-                onChange={(event) => {handleChange(event)}}
+                onChange={handleChange}
               />
               {level}
             </label>
@@ -58,13 +57,13 @@ function AddTask() {
       </div>  
       <div>
         <p>Select Complexity Level</p>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+          {optionLevels.map((level) => (
             <label key={level}>
               <input
                 type="radio"
                 name="complexity"
                 value={level}
-                onChange={(event) => {handleChange(event)}}
+                onChange={handleChange}
               />
               {level}
             </label>
@@ -76,7 +75,7 @@ function AddTask() {
           <input
             type="date"
             name="date"
-            onChange={(event) => {handleChange(event)}}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -84,7 +83,7 @@ function AddTask() {
           <input
             type="time"
             name="time"
-            onChange={(event) => {handleChange(event)}}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -125,9 +124,7 @@ function AddTask() {
           <input
             type="text"
             name="tags"
-            onChange={(event) => {
-                handleChange(event);
-            }}
+            onChange={handleChange}
           />
       </div>
       <button type="submit">Create Task</button>

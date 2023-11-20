@@ -42,9 +42,7 @@ function EditTask() {
         className="input"
         name="todoName"
         value={todo.todoName}
-        onChange={(event) => {
-            handleChange(event);
-        }}
+        onChange={handleChange}
       />
       <div>
         <p>Select Priority Level</p>
@@ -55,7 +53,7 @@ function EditTask() {
                 name="priority"
                 value={level}
                 checked={todo.priority == level ? true : false}
-                onChange={(event) => {handleChange(event)}}
+                onChange={handleChange}
               />
               {level}
             </label>
@@ -70,7 +68,7 @@ function EditTask() {
                 name="complexity"
                 value={level}
                 checked={todo.complexity == level ? true : false}
-                onChange={(event) => {handleChange(event)}}
+                onChange={handleChange}
               />
               {level}
             </label>
@@ -83,7 +81,7 @@ function EditTask() {
             type="date"
             name="date"
             value={todo.date ? todo.date : ""}
-            onChange={(event) => {handleChange(event)}}
+            onChange={handleChange}
           />
         </div>
         <div>
@@ -92,7 +90,7 @@ function EditTask() {
             type="time"
             name="time"
             value={todo.time ? todo.time : ""}
-            onChange={(event) => {handleChange(event)}}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -134,9 +132,7 @@ function EditTask() {
             type="text"
             name="tags"
             value={todo.tags}
-            onChange={(event) => {
-                handleChange(event);
-            }}
+            onChange={handleChange}
           />
       </div>
       <button type="submit">Save Task</button>
