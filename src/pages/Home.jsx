@@ -8,7 +8,7 @@ function Home() {
     todos,
     displayedTodos,
     power,
-    powerTodo,
+    powerTodos,
     togglePower,
     setSearchTerm,
     setSort,
@@ -52,7 +52,7 @@ function Home() {
       </div>
       <br />
       <div className="todos">
-        {power ? (<Todo key={powerTodo.id} todo={powerTodo} />) 
+        {power ? (<Todo key={powerTodos.id} todo={powerTodos} />) 
         : (displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />))}
       </div>
       <div className="flex justify-center space-x-2 mb-5 pb-10">

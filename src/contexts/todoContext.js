@@ -12,6 +12,7 @@ export const TodoProvider = ({ children }) => {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const [todos, setTodos] = useState(initialTodos);
   const [power, setPower] = useState(false);
+  const [powerTodos, setPowerTodos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTags, setFilterTags] = useState("");
   const [sort, setSort] = useState("");
@@ -20,9 +21,12 @@ export const TodoProvider = ({ children }) => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const powerTodo = [...todos]
-    .filter((t) => !t.isCompleted)
-    .sort((a,b) => (b.priority + b.complexity) - (a.priority + a.complexity))[0];
+  const calcPowerTodos = () => {
+    const powerTodo = [...todos]
+                      .filter((t) => !t.isCompleted)
+                      .sort((a,b) => (b.priority + b.complexity) - (a.priority + a.complexity))[0];
+    setPowerTodos(powerTodo);
+  }
 
   const displayedTodos = [...todos]
     .filter((t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags))
@@ -72,13 +76,13 @@ export const TodoProvider = ({ children }) => {
   };
 
   const togglePower = () => {
+    if(!power) calcPowerTodos();
     setPower(!power);
-    console.log(powerTodo);
   }
 
   return (
     <TodoContext.Provider
-      value={{ todos, displayedTodos, power, powerTodo, setPower, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, displayedTodos, power, powerTodos, setPower, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>

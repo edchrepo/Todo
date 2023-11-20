@@ -1,41 +1,44 @@
 import React, { useState } from "react";
 import { useTodo } from "../contexts/todoContext";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
 import { uid } from "uid";
 import "../styles.css";
 
 function TaskForm() {
-  const initialValue = { 
-    todoName: "", 
-    priority: 0, 
-    complexity: 0, 
-    date: 0, 
-    time: 0, 
-    tags: "", 
-    isCompleted: false, 
-    subtasks: []
+  const initialValue = {
+    todoName: "",
+    priority: 0,
+    complexity: 0,
+    date: 0,
+    time: 0,
+    tags: "",
+    isCompleted: false,
+    subtasks: [],
   };
   const { id } = useParams();
   const { addTodo, editTodo, getTodo } = useTodo();
   const todoEdit = getTodo(id);
-  const [subtask, setSubtask] = useState({id: uid(), text: "", isChecked: false });
+  const [subtask, setSubtask] = useState({
+    id: uid(),
+    text: "",
+    isChecked: false,
+  });
   const [subtasks, setSubtasks] = useState(todoEdit ? todoEdit.subtasks : []);
-  const [todo, setTodo] = useState(todoEdit ? todoEdit : initialValue)
+  const [todo, setTodo] = useState(todoEdit ? todoEdit : initialValue);
   const navigate = useNavigate();
-  const optionLevels = [1,2,3,4,5,6,7,8,9,10];
+  const optionLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const handleChange = (e) => {
-    setTodo({...todo, [e.target.name]: e.target.value})
+    setTodo({ ...todo, [e.target.name]: e.target.value });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todo) return;
     if (!todoEdit) {
-      addTodo({...todo, subtasks: subtasks});
-    }
-    else {
-      editTodo({...todo, subtasks: subtasks});
+      addTodo({ ...todo, subtasks: subtasks });
+    } else {
+      editTodo({ ...todo, subtasks: subtasks });
     }
     navigate("/");
   };
@@ -49,20 +52,22 @@ function TaskForm() {
   };
 
   const addSubtask = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (!subtask.text) return;
     setSubtasks([...subtasks, subtask]);
     setSubtask({ id: uid(), text: "", isChecked: false });
-  }
+  };
 
   const removeSubtask = (task) => {
     setSubtasks([...subtasks].filter((s) => s != task));
-  }
+  };
 
   return (
     <div className="px-[30%] flex justify-center">
       <form onSubmit={handleSubmit}>
-        <p className="text-center font-bold mb-2">{!todoEdit ? "Add New Task" : "Edit Task"}</p>
+        <p className="text-center font-bold mb-2">
+          {!todoEdit ? "Add New Task" : "Edit Task"}
+        </p>
         <p>Task Name</p>
         <input
           type="text"
@@ -73,40 +78,50 @@ function TaskForm() {
         />
         <div>
           <p className="my-2">Select Priority Level</p>
-            {optionLevels.map((level) => (
-              <label className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${todo.priority == level ? 'bg-blue-300' : ''}`} key={level}>
-                <input
-                  type="radio"
-                  name="priority"
-                  className="absolute opacity-0 cursor-pointer"
-                  value={level}
-                  checked={todo.priority == level ? true : false}
-                  onChange={handleChange}
-                />
-                <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
-                  {level}
-                </span>
-              </label>
-            ))}
-        </div>  
+          {optionLevels.map((level) => (
+            <label
+              className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${
+                todo.priority == level ? "bg-blue-300" : ""
+              }`}
+              key={level}
+            >
+              <input
+                type="radio"
+                name="priority"
+                className="absolute opacity-0 cursor-pointer"
+                value={level}
+                checked={todo.priority == level ? true : false}
+                onChange={handleChange}
+              />
+              <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+                {level}
+              </span>
+            </label>
+          ))}
+        </div>
         <div>
           <p className="my-2">Select Complexity Level</p>
-            {optionLevels.map((level) => (
-              <label className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${todo.complexity == level ? 'bg-blue-300' : ''}`} key={level}>
-                <input
-                  type="radio"
-                  name="complexity"
-                  className="absolute opacity-0 cursor-pointer"
-                  value={level}
-                  checked={todo.complexity == level ? true : false}
-                  onChange={handleChange}
-                />
-                <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
-                  {level}
-                </span>
-              </label>
-            ))}
-        </div>  
+          {optionLevels.map((level) => (
+            <label
+              className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${
+                todo.complexity == level ? "bg-blue-300" : ""
+              }`}
+              key={level}
+            >
+              <input
+                type="radio"
+                name="complexity"
+                className="absolute opacity-0 cursor-pointer"
+                value={level}
+                checked={todo.complexity == level ? true : false}
+                onChange={handleChange}
+              />
+              <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+                {level}
+              </span>
+            </label>
+          ))}
+        </div>
         <div className="w-[100%] flex justify-between mt-5">
           <div>
             <p className="mb-2">Select Date</p>
@@ -119,7 +134,7 @@ function TaskForm() {
             />
           </div>
           <div>
-          <p className="mb-2">Select Time</p>
+            <p className="mb-2">Select Time</p>
             <input
               type="time"
               name="time"
@@ -133,8 +148,11 @@ function TaskForm() {
           <p className="my-5">Add CheckList For Subtasks</p>
           <ul>
             {subtasks.map((subtask) => (
-              <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between" key={subtask.id}>
-                <input 
+              <div
+                className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between"
+                key={subtask.id}
+              >
+                <input
                   key={subtask.id}
                   type="text"
                   name="subtask"
@@ -142,50 +160,61 @@ function TaskForm() {
                   value={subtask.text}
                   onChange={(e) => handleSubtaskChange(e, subtask.id)}
                 />
-                <button className="bg-red-500 h-8 w-8 rounded-full text-white" 
-                        type="button" 
-                        onClick={() => removeSubtask(subtask)}>
+                <button
+                  className="bg-red-500 h-8 w-8 rounded-full text-white"
+                  type="button"
+                  onClick={() => removeSubtask(subtask)}
+                >
                   x
                 </button>
-                <br/>
+                <br />
               </div>
             ))}
           </ul>
-          <div>
-            <form type="submit" onSubmit={addSubtask}>
-              <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between" key={subtask.id}>
-                <input
-                  type="text"
-                  name="subtasks"
-                  value={subtask.text}
-                  placeholder="Add New Subtask..."
-                  onChange={(e) => setSubtask({...subtask, text: e.target.value})}
-                />
-                <button className="bg-[#0d99ff] h-8 w-8 rounded-full text-white" 
-                        type="submit" 
-                        onClick={addSubtask}>
-                  +
-                </button>
-              </div>
-            </form>
-          </div>
+          <form type="submit" onSubmit={addSubtask}>
+            <div
+              className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between"
+              key={subtask.id}
+            >
+              <input
+                type="text"
+                name="subtasks"
+                value={subtask.text}
+                placeholder="Add New Subtask..."
+                onChange={(e) =>
+                  setSubtask({ ...subtask, text: e.target.value })
+                }
+              />
+              <button
+                className="bg-[#0d99ff] h-8 w-8 rounded-full text-white"
+                type="submit"
+                onClick={addSubtask}
+              >
+                +
+              </button>
+            </div>
+          </form>
         </div>
         <div>
           <p className="my-5">Add Tags</p>
-            <input
-              type="text"
-              name="tags"
-              className="bg-white w-[100%] rounded-full p-2 mb-5"
-              value={todo.tags}
-              onChange={handleChange}
-            />
+          <input
+            type="text"
+            name="tags"
+            className="bg-white w-[100%] rounded-full p-2 mb-5"
+            value={todo.tags}
+            onChange={handleChange}
+          />
         </div>
         <div className="flex justify-center">
-          <button className="bg-[#0d99ff] rounded-full p-4 text-white" type="submit">{!todoEdit ? "Create Task" : "Update Task"}</button>
+          <button
+            className="bg-[#0d99ff] rounded-full p-4 text-white"
+            type="submit"
+          >
+            {!todoEdit ? "Create Task" : "Update Task"}
+          </button>
         </div>
       </form>
     </div>
-
   );
 }
 
