@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate, useParams } from "react-router-dom"
+import { uid } from "uid";
 import "../styles.css";
 
 function EditTask() {
@@ -8,7 +9,7 @@ function EditTask() {
   const { id } = useParams();
 
   const todoEdit = initialTodos.find((t) => t.id == id)
-  const [subtask, setSubtask] = useState({ text: "", isChecked: false });
+  const [subtask, setSubtask] = useState({id: uid(), text: "", isChecked: false });
   const [subtasks, setSubtasks] = useState(todoEdit.subtasks);
   const [todo, setTodo] = useState(todoEdit);
   const { editTodo } = useTodo();
@@ -29,7 +30,7 @@ function EditTask() {
     e.preventDefault(); 
     if (!subtask.text) return;
     setSubtasks([...subtasks, subtask]);
-    setSubtask({ text: "", isChecked: false });
+    setSubtask({ id: uid(), text: "", isChecked: false });
   }
 
   const removeSubtask = (task) => {
@@ -99,7 +100,7 @@ function EditTask() {
         <p>Add CheckList For Subtasks</p>
         <ul>
           {subtasks.map((subtask, index) => (
-            <>
+            <React.Fragment key={subtask.id}>
               <input 
                 key={index}
                 type="text"
@@ -111,7 +112,7 @@ function EditTask() {
                 x
               </button>
               <br/>
-            </>
+            </React.Fragment>
           ))}
         </ul>
         <div>
