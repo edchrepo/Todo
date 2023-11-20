@@ -23,7 +23,8 @@ function AddTask() {
     navigate("/");
   };
 
-  const addSubtask = () => {
+  const addSubtask = (e) => {
+    e.preventDefault(); 
     if (!subtask.text) return;
     setSubtasks([...subtasks, subtask]);
     setSubtask({ text: "", isChecked: false });
@@ -107,16 +108,18 @@ function AddTask() {
           ))}
         </ul>
         <div>
-          <input
-            type="text"
-            name="subtasks"
-            value={subtask.text}
-            placeholder="Add New Subtask..."
-            onChange={(e) => setSubtask({...subtask, text: e.target.value})}
-          />
-          <button type="button" onClick={addSubtask}>
-            +
-          </button>
+          <form type="submit" onSubmit={addSubtask}>
+            <input
+              type="text"
+              name="subtasks"
+              value={subtask.text}
+              placeholder="Add New Subtask..."
+              onChange={(e) => setSubtask({...subtask, text: e.target.value})}
+            />
+            <button type="submit" onClick={addSubtask}>
+              +
+            </button>
+          </form>
         </div>
       </div>
       <div>

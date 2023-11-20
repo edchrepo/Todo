@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useTodo } from "../contexts/todoContext";
 import Todo from "../components/Todo"
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 const TodoDetail = () => {
   const { id } = useParams();
@@ -43,13 +43,13 @@ const TodoDetail = () => {
       <p>Checklist for subtasks</p>
       <ul>
         {subtasks.map((subtask, index) => (
-          <>
+          <React.Fragment key={index}>
             <div style={{textDecoration: subtask.isChecked ? "line-through" : ""}}>
               {subtask.text}
               <button type="button" onClick={(e) => {handleSubtask(index)}}>&#10003;</button>
             </div>
-            <br />
-          </>
+            <br/>
+          </React.Fragment>
         ))}
       </ul>
       <button type="button" onClick={repeatTask}>Repeat Task</button>
