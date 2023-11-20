@@ -22,7 +22,7 @@ function TaskForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!todo) return;
-    if (addForm) {
+    if (!todoEdit) {
       addTodo({...todoData, subtasks: subtasks});
     }
     else {
