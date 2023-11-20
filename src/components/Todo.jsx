@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom";
@@ -48,8 +47,7 @@ function Todo({ todo }) {
 
   return (
     <div
-      className="bg-white border p-2.5 border-solid border-[#ccc] rounded-lg mb-5"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      className = {`${todo.isCompleted ? "bg-blue-100" : "bg-white"} border p-2.5 border-solid border-[#ccc] rounded-lg mb-5`}
       onClick={() => navigate(`/todo/${todo.id}`)}
     >
       <div className="flex items-center">
@@ -57,7 +55,6 @@ function Todo({ todo }) {
           className="h-[15px] w-[15px] inline-block rounded-[50%]"
           style={{ backgroundColor: colorLabel }}
         />
-        {/* <Link to={`/todo/${todo.id}`}>{todo.todoName}</Link> */}
         <span className="font-bold ml-1">{todo.todoName}</span>
         <div className="grow" />
         <div className="space-x-2">
