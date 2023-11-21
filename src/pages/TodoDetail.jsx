@@ -31,7 +31,7 @@ const TodoDetail = () => {
   }
 
   return (
-    <div className="px-[30%]">
+    <div className="xl:px-[40%] lg:px-[30%] md:px-[20%] sm:px-[10%]">
       <button className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full" onClick={() => navigate("/")}>⏎ Back</button>
       <p className="justify-center text-center font-bold mb-5">Task Details</p>
       <Todo todo={todo}/>

@@ -63,7 +63,7 @@ function TaskForm() {
   };
 
   return (
-    <div className="px-[30%] flex justify-center">
+    <div className="xl:px-[40%] lg:px-[30%] md:px-[20%] sm:px-[10%] flex justify-center">
       <form onSubmit={handleSubmit}>
         <button className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full" onClick={() => navigate("/")}>⏎ Back</button>
         <p className="text-center font-bold">
