@@ -6,8 +6,8 @@ import { PlusIcon, PowerOnIcon, PowerOffIcon } from "../icons";
 
 function Home() {
   const {
-    todos,
     displayedTodos,
+    tags,
     power,
     powerTodos,
     togglePower,
@@ -15,10 +15,6 @@ function Home() {
     setSort,
     setFilterTags,
   } = useTodo();
-  const tags = new Set();
-  todos.forEach(
-    (t) => t.tags && t.tags.split(",").forEach((tag) => tags.add(tag.trim()))
-  );
 
   return (
     <div className="xl:px-[40%] lg:px-[30%] md:px-[20%] sm:px-[10%] mt-5">
@@ -51,7 +47,7 @@ function Home() {
             onChange={(e) => setFilterTags(e.target.value)}
           >
             <option value="">Default</option>
-            {[...tags].map((tag, index) => (
+            {tags.map((tag, index) => (
               <option key={index} value={tag}>
                 {tag}
               </option>

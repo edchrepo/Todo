@@ -60,8 +60,12 @@ function TaskForm() {
   };
 
   const removeSubtask = (task) => {
-    setSubtasks([...subtasks].filter((s) => s != task));
+    setSubtasks(subtasks.filter((s) => s != task));
   };
+
+  const handleNewSubtaskChange = (e) => {
+    setSubtask({ ...subtask, text: e.target.value })          
+  }
 
   return (
     <div className="xl:px-[40%] lg:px-[30%] md:px-[20%] sm:px-[10%] flex justify-center">
@@ -189,9 +193,7 @@ function TaskForm() {
                 className="flex-grow"
                 value={subtask.text}
                 placeholder="Add New Subtask..."
-                onChange={(e) =>
-                  setSubtask({ ...subtask, text: e.target.value })
-                }
+                onChange={handleNewSubtaskChange}
               />
               <button
                 className="bg-[#0d99ff] border h-8 w-8 rounded-full text-white flex justify-center items-center hover:border-blue-700"

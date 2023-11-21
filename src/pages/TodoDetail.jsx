@@ -26,7 +26,7 @@ const TodoDetail = () => {
   const handleSubtask = (id) => {
     // Toggle checks current subtask id to !isChecked
     setSubtasks(
-      [...subtasks].map((s) =>
+      subtasks.map((s) =>
         s.id == id ? { ...s, isChecked: !s.isChecked } : s
       )
     );
@@ -34,7 +34,7 @@ const TodoDetail = () => {
 
   const repeatTask = () => {
     // Changes all subtasks to unChecked to reset task
-    setSubtasks([...subtasks].map((s) => ({ ...s, isChecked: false })));
+    setSubtasks(subtasks.map((s) => ({ ...s, isChecked: false })));
   };
 
   return (

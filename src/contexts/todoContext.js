@@ -12,6 +12,7 @@ export const TodoProvider = ({ children }) => {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const [todos, setTodos] = useState(initialTodos);
   const [power, setPower] = useState(false);
+  const [tags, setTags] = useState([]);
   const [powerTodos, setPowerTodos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTags, setFilterTags] = useState("");
@@ -21,6 +22,7 @@ export const TodoProvider = ({ children }) => {
     localStorage.setItem('todos', JSON.stringify(todos));
     // When todos change, recalculate powerTodos
     calcPowerTodos();
+    generateTags();
   }, [todos]);
 
   const calcPowerTodos = () => {
@@ -50,6 +52,14 @@ export const TodoProvider = ({ children }) => {
           return 0;
       }
   });
+
+  const generateTags = () => {
+    const tags = new Set();
+    todos.forEach(
+      (t) => t.tags && t.tags.split(",").forEach((tag) => tags.add(tag.trim()))
+    );
+    setTags([...tags]);
+  }
 
   const addTodo = (todo) => {
     const newTodos = [...todos, {...todo, id : uid()}];
@@ -85,7 +95,7 @@ export const TodoProvider = ({ children }) => {
 
   return (
     <TodoContext.Provider
-      value={{ todos, displayedTodos, power, powerTodos, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, tags, displayedTodos, power, powerTodos, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>
