@@ -2,6 +2,7 @@ import Todo from "../components/Todo";
 import { useTodo } from "../contexts/todoContext";
 import { Link } from "react-router-dom";
 import "../styles.css";
+import { PlusIcon, PowerOnIcon, PowerOffIcon } from "../icons"
 
 function Home() {
   const {
@@ -15,7 +16,7 @@ function Home() {
     setFilterTags,
   } = useTodo();
   const tags = new Set();
-  todos.forEach((t) =>
+  todos.forEach((t) => t.tags && 
     t.tags.split(",").forEach((tag) => tags.add(tag.trim()))
   );
 
@@ -56,9 +57,16 @@ function Home() {
         : (displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />))}
       </div>
       <div className="flex justify-center space-x-2 mb-5 pb-10">
-        <button className="bg-[#0d99ff] rounded-full p-4 text-white" onClick={() => togglePower()}>{`Power ${!power ? "On ⚡" : "Off"}`}</button>
+        <button className="bg-[#0d99ff] rounded-full p-4 text-white flex justify-center items-center" onClick={() => togglePower()}>
+          <p className="mr-1.5">Power </p>
+          <p className="mr-1.5">{!power ? "On" : "Off"}</p>
+          {!power ? <img src={PowerOnIcon}/>  : <img src={PowerOffIcon}/>}
+        </button>
         <Link to={"/addTask"}>
-          <button className="bg-[#0d99ff] rounded-full p-4 text-white">+ Add New Task</button>
+          <button className="bg-[#0d99ff] rounded-full p-4 text-white flex justify-center items-center">
+            <img className="mr-1.5" src={PlusIcon}/>
+            <p>Add New Task</p>
+          </button>
         </Link>
       </div>
     </div>

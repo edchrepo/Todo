@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
+import { PriorityIcon, ComplexityIcon, CalendarIcon, RemoveIcon, EditIcon, CheckIcon } from "../icons";
 import "../styles.css";
 
 function Todo({ todo }) {
@@ -58,51 +59,51 @@ function Todo({ todo }) {
         />
         <span className="font-bold ml-1">{todo.todoName}</span>
         <div className="grow" />
-        <div className="space-x-2">
+        <div className="space-x-2 flex">
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
+            className={`${todo.isCompleted ? "bg-[#0d99ff]" : "bg-blue-200" } rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center`}
             onClick={(e) => {
               e.stopPropagation();
               completeTodo(todo);
             }}
           >
-            ✓
+            <img className="h-[16px] w-[16px]" src={CheckIcon}/>
           </button>
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
+            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               removeTodo(todo);
               navigate("/");
             }}
           >
-            ×
+            <img className="h-[16px] w-[16px]" src={RemoveIcon}/>
           </button>
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
+            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               navigate(`/editTask/${todo.id}`);
             }}
           >
-            ✎
+            <img className="h-[16px] w-[16px]" src={EditIcon}/>
           </button>
         </div>
       </div>
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-2 mt-2">
         <div>
-          <span className="inline-block w-[24px]">📅</span>
-          <span className="text-[#b2aeae]">Due Date: </span>
+          <img className="inline-block w-[24px]" src={CalendarIcon}/>
+          <span className="text-[#b2aeae]"> Due Date: </span>
           <span style={{ color: colorLabel }}>{todoDate.toLocaleString("en-US", { timeZone: "EST" })}</span>
         </div>
         <div>
-          <span className="inline-block w-[24px]">↑</span>
-          <span className="text-[#b2aeae]">Priority: </span>
+          <img className="inline-block w-[24px]" src={PriorityIcon}/>
+          <span className="text-[#b2aeae]"> Priority: </span>
           <span>{`${getLabelForNumber(todo.priority)}(${todo.priority}/10)`}</span>
         </div>
         <div>
-          <span className="inline-block w-[24px]">↔</span>
-          <span className="text-[#b2aeae]">Complexity: </span>
+          <img className="inline-block w-[24px]" src={ComplexityIcon}/>
+          <span className="text-[#b2aeae]"> Complexity: </span>
           <span>{`${getLabelForNumber(todo.complexity)}(${todo.complexity}/10)`}</span>
         </div>
         <p>Task Completed: </p>
