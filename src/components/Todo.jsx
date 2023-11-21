@@ -48,7 +48,7 @@ function Todo({ todo }) {
 
   return (
     <div
-      className = {`${todo.isCompleted ? "bg-blue-100 border-[#0d99ff]" : "bg-white"} 
+      className = {`${todo.isCompleted ? "bg-blue-50 border-[#0d99ff]" : "bg-white"} 
                   border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer hover:border-[#0d99ff]`}
       onClick={() => navigate(`/todo/${todo.id}`)}
     >
@@ -116,11 +116,9 @@ function Todo({ todo }) {
             ) || 0
           }
         />
-        {todo.tags && todo.tags.split(",").map((tag, index) =>
-          <span className="pt-2 pb-1" key={index}>
-            <span className="bg-blue-200 rounded-full p-2">{tag}</span>
-          </span>
-        )}
+        <p className="flex">{todo.tags && todo.tags.split(",").map((tag, index) =>
+          <span className={`${index % 2 == 0 ? "bg-blue-100": "bg-red-100"} rounded-full p-2 flex items-center mr-2`} key={index}>{tag}</span>
+        )}</p>
       </div>
     </div>
   );
