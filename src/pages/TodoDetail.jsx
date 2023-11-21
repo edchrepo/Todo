@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTodo } from "../contexts/todoContext";
 import Todo from "../components/Todo"
 import React, { useState, useEffect } from "react";
@@ -8,6 +8,7 @@ const TodoDetail = () => {
   const { getTodo, editTodo } = useTodo();
   const todo = getTodo(id);
   const [subtasks, setSubtasks] = useState(todo.subtasks);
+  const navigate = useNavigate();
 
   if (!todo) return <div>No todo found</div>;
 
@@ -31,12 +32,13 @@ const TodoDetail = () => {
 
   return (
     <div className="px-[30%]">
-      <p className="justify-center text-center font-bold">Task Details</p>
+      <button className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full" onClick={() => navigate("/")}>⏎ Back</button>
+      <p className="justify-center text-center font-bold mb-5">Task Details</p>
       <Todo todo={todo}/>
       <p className="mb-5">Checklist for subtasks</p>
       <ul>
         {subtasks.map((subtask) => (
-          <div className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between items-center" key={subtask.id}>
+          <div className="bg-white w-[100%] rounded-full p-3 mb-5 flex justify-between items-center" key={subtask.id}>
             <span>{subtask.text}</span>
             <button className= "rounded-[50%] h-[32px] w-[32px]" 
                     style={{backgroundColor: subtask.isChecked ? "#0d99ff" : "#90CAF9"}} 

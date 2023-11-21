@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import TodoDetail from "./pages/TodoDetail";
 import TaskForm from "./pages/TaskForm"
@@ -8,9 +8,6 @@ import { TodoProvider } from "./contexts/todoContext";
 function App() {
   return (
     <Router>
-      <nav className="flex justify-center font-bold">
-        <Link to="/">🏠</Link>
-      </nav>
       <TodoProvider>
         <Routes>
           <Route exact path="/" element={<Home />} />

@@ -20,7 +20,7 @@ function Home() {
   );
 
   return (
-    <div className="px-[30%]">
+    <div className="px-[30%] mt-5">
       <input
         type="text"
         className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"

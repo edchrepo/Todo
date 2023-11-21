@@ -48,7 +48,7 @@ function Todo({ todo }) {
   return (
     <div
       className = {`${todo.isCompleted ? "bg-blue-100 border-[#0d99ff]" : "bg-white"} 
-                  border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer`}
+                  border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer hover:border-[#0d99ff]`}
       onClick={() => navigate(`/todo/${todo.id}`)}
     >
       <div className="flex items-center">
@@ -60,7 +60,7 @@ function Todo({ todo }) {
         <div className="grow" />
         <div className="space-x-2">
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px]"
+            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
             onClick={(e) => {
               e.stopPropagation();
               completeTodo(todo);
@@ -69,7 +69,7 @@ function Todo({ todo }) {
             ✓
           </button>
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px]"
+            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
             onClick={(e) => {
               e.stopPropagation();
               removeTodo(todo);
@@ -79,7 +79,7 @@ function Todo({ todo }) {
             ×
           </button>
           <button
-            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px]"
+            className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400"
             onClick={(e) => {
               e.stopPropagation();
               navigate(`/editTask/${todo.id}`);

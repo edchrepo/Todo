@@ -65,10 +65,11 @@ function TaskForm() {
   return (
     <div className="px-[30%] flex justify-center">
       <form onSubmit={handleSubmit}>
-        <p className="text-center font-bold mb-2">
+        <button className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full" onClick={() => navigate("/")}>⏎ Back</button>
+        <p className="text-center font-bold">
           {!todoEdit ? "Add New Task" : "Edit Task"}
         </p>
-        <p>Task Name</p>
+        <p className="my-2">Task Name</p>
         <input
           type="text"
           className="w-[100%] border p-2 border-solid border-[#ccc] rounded-lg mb-2.5"
@@ -81,7 +82,7 @@ function TaskForm() {
           {optionLevels.map((level) => (
             <label
               className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${
-                todo.priority == level ? "bg-blue-300" : ""
+                todo.priority == level ? "bg-[#0d99ff] text-white" : ""
               }`}
               key={level}
             >
@@ -93,7 +94,7 @@ function TaskForm() {
                 checked={todo.priority == level ? true : false}
                 onChange={handleChange}
               />
-              <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+              <span className="flex items-center justify-center w-6 h-6 border border-blue-200 rounded-full">
                 {level}
               </span>
             </label>
@@ -104,7 +105,7 @@ function TaskForm() {
           {optionLevels.map((level) => (
             <label
               className={`inline-block cursor-pointer rounded-full mb-2 mr-4 ${
-                todo.complexity == level ? "bg-blue-300" : ""
+                todo.complexity == level ? "bg-[#0d99ff] text-white" : ""
               }`}
               key={level}
             >
@@ -116,7 +117,7 @@ function TaskForm() {
                 checked={todo.complexity == level ? true : false}
                 onChange={handleChange}
               />
-              <span className="flex items-center justify-center w-6 h-6 border border-gray-300 rounded-full">
+              <span className="flex items-center justify-center w-6 h-6 border border-blue-200 rounded-full">
                 {level}
               </span>
             </label>
@@ -149,7 +150,7 @@ function TaskForm() {
           <ul>
             {subtasks.map((subtask) => (
               <div
-                className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between"
+                className="bg-white w-[100%] rounded-full p-3 mb-5 flex justify-between"
                 key={subtask.id}
               >
                 <input
@@ -173,12 +174,13 @@ function TaskForm() {
           </ul>
           <form type="submit" onSubmit={addSubtask}>
             <div
-              className="bg-white w-[100%] rounded-full p-2 mb-5 flex justify-between"
+              className="bg-white w-[100%] rounded-full p-3 mb-5 flex justify-between"
               key={subtask.id}
             >
               <input
                 type="text"
                 name="subtasks"
+                className="flex-grow"
                 value={subtask.text}
                 placeholder="Add New Subtask..."
                 onChange={(e) =>
