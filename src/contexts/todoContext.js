@@ -19,6 +19,8 @@ export const TodoProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
+    // When todos change, recalculate powerTodos
+    calcPowerTodos();
   }, [todos]);
 
   const calcPowerTodos = () => {
@@ -77,13 +79,13 @@ export const TodoProvider = ({ children }) => {
   };
 
   const togglePower = () => {
-    if(!power) calcPowerTodos();
+    if (!power) calcPowerTodos();
     setPower(!power);
   }
 
   return (
     <TodoContext.Provider
-      value={{ todos, displayedTodos, power, powerTodos, setPower, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
+      value={{ todos, displayedTodos, power, powerTodos, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
     >
       {children}
     </TodoContext.Provider>

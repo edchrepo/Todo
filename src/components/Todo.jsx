@@ -47,7 +47,8 @@ function Todo({ todo }) {
 
   return (
     <div
-      className = {`${todo.isCompleted ? "bg-blue-100" : "bg-white"} border p-2.5 border-solid border-[#ccc] rounded-lg mb-5`}
+      className = {`${todo.isCompleted ? "bg-blue-100 border-[#0d99ff]" : "bg-white"} 
+                  border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer`}
       onClick={() => navigate(`/todo/${todo.id}`)}
     >
       <div className="flex items-center">
