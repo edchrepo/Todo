@@ -2,7 +2,14 @@ import { useState, useEffect } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
-import { PriorityIcon, ComplexityIcon, CalendarIcon, RemoveIcon, EditIcon, CheckIcon } from "../icons";
+import {
+  PriorityIcon,
+  ComplexityIcon,
+  CalendarIcon,
+  RemoveIcon,
+  EditIcon,
+  CheckIcon,
+} from "../icons";
 import "../styles.css";
 
 function Todo({ todo }) {
@@ -48,8 +55,8 @@ function Todo({ todo }) {
 
   return (
     <div
-      className = {`${todo.isCompleted ? "bg-blue-50 border-[#0d99ff]" : "bg-white"} 
-                  border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer hover:border-[#0d99ff]`}
+      className={`${todo.isCompleted ? "bg-blue-50 border-[#0d99ff]" : "bg-white"} 
+                border p-2.5 border-solid border-[#ccc] rounded-lg mb-5 hover:cursor-pointer hover:border-[#0d99ff]`}
       onClick={() => navigate(`/todo/${todo.id}`)}
     >
       <div className="flex items-center">
@@ -61,13 +68,14 @@ function Todo({ todo }) {
         <div className="grow" />
         <div className="space-x-2 flex">
           <button
-            className={`${todo.isCompleted ? "bg-[#0d99ff]" : "bg-blue-200" } rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center`}
+            className={`${todo.isCompleted ? "bg-[#0d99ff]" : "bg-blue-200"} 
+                      rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center`}
             onClick={(e) => {
               e.stopPropagation();
               completeTodo(todo);
             }}
           >
-            <img className="h-[16px] w-[16px]" src={CheckIcon}/>
+            <img className="h-[16px] w-[16px]" src={CheckIcon} />
           </button>
           <button
             className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center"
@@ -77,7 +85,7 @@ function Todo({ todo }) {
               navigate("/");
             }}
           >
-            <img className="h-[16px] w-[16px]" src={RemoveIcon}/>
+            <img className="h-[16px] w-[16px]" src={RemoveIcon} />
           </button>
           <button
             className="bg-blue-200 rounded-[50%] h-[32px] w-[32px] hover:bg-blue-400 flex items-center justify-center"
@@ -86,23 +94,25 @@ function Todo({ todo }) {
               navigate(`/editTask/${todo.id}`);
             }}
           >
-            <img className="h-[16px] w-[16px]" src={EditIcon}/>
+            <img className="h-[16px] w-[16px]" src={EditIcon} />
           </button>
         </div>
       </div>
       <div className="flex flex-col space-y-2 mt-2">
         <div>
-          <img className="inline-block w-[24px]" src={CalendarIcon}/>
+          <img className="inline-block w-[24px]" src={CalendarIcon} />
           <span className="text-[#b2aeae]"> Due Date: </span>
-          <span style={{ color: colorLabel }}>{todoDate.toLocaleString("en-US", { timeZone: "EST" })}</span>
+          <span style={{ color: colorLabel }}>
+            {todoDate.toLocaleString("en-US", { timeZone: "EST" })}
+          </span>
         </div>
         <div>
-          <img className="inline-block w-[24px]" src={PriorityIcon}/>
+          <img className="inline-block w-[24px]" src={PriorityIcon} />
           <span className="text-[#b2aeae]"> Priority: </span>
           <span>{`${getLabelForNumber(todo.priority)}(${todo.priority}/10)`}</span>
         </div>
         <div>
-          <img className="inline-block w-[24px]" src={ComplexityIcon}/>
+          <img className="inline-block w-[24px]" src={ComplexityIcon} />
           <span className="text-[#b2aeae]"> Complexity: </span>
           <span>{`${getLabelForNumber(todo.complexity)}(${todo.complexity}/10)`}</span>
         </div>
@@ -116,9 +126,19 @@ function Todo({ todo }) {
             ) || 0
           }
         />
-        <p className="flex">{todo.tags && todo.tags.split(",").map((tag, index) =>
-          <span className={`${index % 2 == 0 ? "bg-blue-100": "bg-red-100"} rounded-full p-2 flex items-center mr-2`} key={index}>{tag}</span>
-        )}</p>
+        <p className="flex">
+          {todo.tags &&
+            todo.tags.split(",").map((tag, index) => (
+              <span
+                className={`${
+                  index % 2 == 0 ? "bg-blue-100" : "bg-red-100"
+                } rounded-full p-2 flex items-center mr-2`}
+                key={index}
+              >
+                {tag}
+              </span>
+            ))}
+        </p>
       </div>
     </div>
   );
