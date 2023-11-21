@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useTodo } from "../contexts/todoContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { uid } from "uid";
+import { BackIcon, PlusIcon, WhiteRemoveIcon } from "../icons";
 import "../styles.css";
 
 function TaskForm() {
@@ -65,7 +66,12 @@ function TaskForm() {
   return (
     <div className="xl:px-[40%] lg:px-[30%] md:px-[20%] sm:px-[10%] flex justify-center">
       <form onSubmit={handleSubmit}>
-        <button className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full" onClick={() => navigate("/")}>⏎ Back</button>
+        <button
+          className="mt-5 border p-2 bg-[#0d99ff] text-white rounded-full"
+          onClick={() => navigate("/")}
+        >
+          <img src={BackIcon} />
+        </button>
         <p className="text-center font-bold">
           {!todoEdit ? "Add New Task" : "Edit Task"}
         </p>
@@ -162,11 +168,11 @@ function TaskForm() {
                   onChange={(e) => handleSubtaskChange(e, subtask.id)}
                 />
                 <button
-                  className="bg-red-500 h-8 w-8 rounded-full text-white"
+                  className="bg-red-500 border h-8 w-8 rounded-full text-white flex justify-center items-center hover:border-red-700"
                   type="button"
                   onClick={() => removeSubtask(subtask)}
                 >
-                  x
+                  <img src={WhiteRemoveIcon} />
                 </button>
                 <br />
               </div>
@@ -188,11 +194,11 @@ function TaskForm() {
                 }
               />
               <button
-                className="bg-[#0d99ff] h-8 w-8 rounded-full text-white"
+                className="bg-[#0d99ff] border h-8 w-8 rounded-full text-white flex justify-center items-center hover:border-blue-700"
                 type="submit"
                 onClick={addSubtask}
               >
-                +
+                <img src={PlusIcon} />
               </button>
             </div>
           </form>
@@ -204,6 +210,7 @@ function TaskForm() {
             name="tags"
             className="bg-white w-[100%] rounded-full p-2 mb-5"
             value={todo.tags}
+            placeholder="Tag1, Tag2, Tag3, ..."
             onChange={handleChange}
           />
         </div>
