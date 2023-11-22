@@ -20,7 +20,7 @@ export const TodoProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-    // When todos change, recalculate powerTodos
+    // recall when todo completes, to move on to next poweredTodo
     calcPowerTodos();
     generateTags();
   }, [todos]);
@@ -72,11 +72,21 @@ export const TodoProvider = ({ children }) => {
   }
 
   const completeTodo = (todo) => {
-    setTodos((todos) =>
-      todos.map((t) =>
+    setTodos((todos) => {
+      // Toggle isCompleted for current todo in todos array first
+      const updatedTodos = todos.map((t) =>
         t.id === todo.id ? { ...t, isCompleted: !t.isCompleted } : t
-      )
-    );
+      );
+
+      // Sort the todos array so that completed Todos come after incomplete Todos
+      const sortedTodos = updatedTodos.sort((a, b) => {
+        if (a.isCompleted && !b.isCompleted) return 1;
+        if (!a.isCompleted && b.isCompleted) return -1; 
+        return 0;
+      });
+
+      return sortedTodos;
+    });
   };
 
   const removeTodo = (todo) => {

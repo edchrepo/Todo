@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import TodoDetail from "./pages/TodoDetail";
 import TaskForm from "./pages/TaskForm"
-import { TodoProvider } from "./contexts/todoContext";
+import { TodoProvider } from "./context/todoContext";
 
 function App() {
   return (

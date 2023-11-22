@@ -1,5 +1,5 @@
 import Todo from "../components/Todo";
-import { useTodo } from "../contexts/todoContext";
+import { useTodo } from "../context/todoContext";
 import { Link } from "react-router-dom";
 import "../styles.css";
 import { PlusIcon, PowerOnIcon, PowerOffIcon } from "../icons";
@@ -55,15 +55,7 @@ function Home() {
           </select>
         </div>
       </div>
-      <br />
-      <div className="todos">
-        {power && powerTodos ? (
-          <Todo key={powerTodos.id} todo={powerTodos} />
-        ) : (
-          displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />)
-        )}
-      </div>
-      <div className="flex justify-center space-x-2 mb-5 pb-10">
+      <div className="flex justify-center space-x-2 mb-2.5">
         <button
           className="bg-[#0d99ff] rounded-full p-4 text-white flex justify-center items-center"
           onClick={() => togglePower()}
@@ -78,6 +70,13 @@ function Home() {
             <p>Add New Task</p>
           </button>
         </Link>
+      </div>
+      <div className="todos">
+        {power && powerTodos ? (
+          <Todo key={powerTodos.id} todo={powerTodos} />
+        ) : (
+          displayedTodos.map((todo) => <Todo key={todo.id} todo={todo} />)
+        )}
       </div>
     </div>
   );

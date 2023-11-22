@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTodo } from "../contexts/todoContext";
+import { useTodo } from "../context/todoContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { uid } from "uid";
 import { BackIcon, PlusIcon, WhiteRemoveIcon } from "../icons";

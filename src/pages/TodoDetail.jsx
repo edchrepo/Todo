@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useTodo } from "../contexts/todoContext";
+import { useTodo } from "../context/todoContext";
 import Todo from "../components/Todo";
 import React, { useState, useEffect } from "react";
 import {

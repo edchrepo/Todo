@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTodo } from "../contexts/todoContext";
+import { useTodo } from "../context/todoContext";
 import { useNavigate } from "react-router-dom";
 import ProgressBar from "./ProgressBar";
 import {
@@ -16,8 +16,8 @@ function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
   const todoDate = todo.date
-    ? new Date(`${todo.date}T${todo.time || "00:00:00"}`)
-    : 0;
+    ? new Date(`${todo.date}T${todo.time || "23:59:00"}`)
+    : "Not Specified";
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -116,16 +116,20 @@ function Todo({ todo }) {
           <span className="text-[#b2aeae]"> Complexity: </span>
           <span>{`${getLabelForNumber(todo.complexity)}(${todo.complexity}/10)`}</span>
         </div>
-        <p>Task Completed: </p>
-        <ProgressBar
-          progress={
-            Math.floor(
-              (todo.subtasks.filter((subtask) => subtask.isChecked).length /
-                todo.subtasks.length) *
-                100
-            ) || 0
-          }
-        />
+        {todo.subtasks.length >= 1 &&
+          <div>
+            <p>Task Completed: </p>
+            <ProgressBar
+              progress={
+                Math.floor(
+                  (todo.subtasks.filter((subtask) => subtask.isChecked).length /
+                    todo.subtasks.length) *
+                    100
+                ) || 0
+              }
+            />
+          </div>
+        }
         <p className="flex">
           {todo.tags &&
             todo.tags.split(",").map((tag, index) => (
