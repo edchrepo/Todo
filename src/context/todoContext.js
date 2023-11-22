@@ -42,13 +42,13 @@ export const TodoProvider = ({ children }) => {
       switch (sort) {
         case "Ascending Date":
           return (
-            new Date(`${a.date}T${a.time || "00:00:00"}`) -
-            new Date(`${b.date}T${b.time || "00:00:00"}`)
+            new Date(`${a.date}T${a.time || "23:59:59"}`) -
+            new Date(`${b.date}T${b.time || "23:59:59"}`)
           );
         case "Descending Date":
           return (
-            new Date(`${b.date}T${b.time || "00:00:00"}`) -
-            new Date(`${a.date}T${a.time || "00:00:00"}`)
+            new Date(`${b.date}T${b.time || "23:59:59"}`) -
+            new Date(`${a.date}T${a.time || "23:59:59"}`)
           );
         case "Ascending Complexity":
           return a.complexity - b.complexity;

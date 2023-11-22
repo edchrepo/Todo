@@ -16,7 +16,7 @@ function Todo({ todo }) {
   const { completeTodo, removeTodo } = useTodo();
   const [colorLabel, setColorLabel] = useState("#0d99ff");
   const todoDate = todo.date
-    ? new Date(`${todo.date}T${todo.time || "23:59:00"}`)
+    ? new Date(`${todo.date}T${todo.time || "23:59:59"}`)
     : "Not Specified";
   const navigate = useNavigate();
 
@@ -38,13 +38,11 @@ function Todo({ todo }) {
 
   const handleColor = () => {
     const todoDate = todo.date
-      ? new Date(`${todo.date}T${todo.time || "00:00:00"}`)
+      ? new Date(`${todo.date}T${todo.time || "23:59:59"}`)
       : 0;
     const currentDate = new Date();
-    const dayDifference = Math.ceil(
-      (todoDate - currentDate) / (1000 * 60 * 60 * 24)
-    );
-    if (dayDifference == 0) {
+    const dayDifference = (todoDate - currentDate) / (1000 * 60 * 60 * 24)
+    if (dayDifference < 1 && dayDifference >= 0) {
       setColorLabel("#ff4034");
     } else if (dayDifference <= 3 && dayDifference > 0) {
       setColorLabel("#fe7e08");
