@@ -9,7 +9,7 @@ export function useTodo() {
 }
 
 export const TodoProvider = ({ children }) => {
-  const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
+  const initialTodos = JSON.parse(localStorage.getItem("todos")) || [];
   const [todos, setTodos] = useState(initialTodos);
   const [power, setPower] = useState(false);
   const [tags, setTags] = useState([]);
@@ -19,7 +19,7 @@ export const TodoProvider = ({ children }) => {
   const [sort, setSort] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
     // recall when todo completes, to move on to next poweredTodo
     calcPowerTodos();
     generateTags();
@@ -27,31 +27,41 @@ export const TodoProvider = ({ children }) => {
 
   const calcPowerTodos = () => {
     const powerTodo = [...todos]
-                      .filter((t) => !t.isCompleted)
-                      .sort((a,b) => (b.priority + b.complexity) - (a.priority + a.complexity))[0];
+      .filter((t) => !t.isCompleted)
+      .sort(
+        (a, b) => b.priority + b.complexity - (a.priority + a.complexity)
+      )[0];
     setPowerTodos(powerTodo);
-  }
+  };
 
   const displayedTodos = [...todos]
-    .filter((t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags))
+    .filter(
+      (t) => t.todoName.includes(searchTerm) && t.tags.includes(filterTags)
+    )
     .sort((a, b) => {
       switch (sort) {
-        case 'Ascending Date':
-          return new Date(`${a.date}T${a.time || '00:00:00'}`) - new Date(`${b.date}T${b.time || '00:00:00'}`);
-        case 'Descending Date':
-          return new Date(`${b.date}T${b.time || '00:00:00'}`) - new Date(`${a.date}T${a.time || '00:00:00'}`);
-        case 'Ascending Complexity':
+        case "Ascending Date":
+          return (
+            new Date(`${a.date}T${a.time || "00:00:00"}`) -
+            new Date(`${b.date}T${b.time || "00:00:00"}`)
+          );
+        case "Descending Date":
+          return (
+            new Date(`${b.date}T${b.time || "00:00:00"}`) -
+            new Date(`${a.date}T${a.time || "00:00:00"}`)
+          );
+        case "Ascending Complexity":
           return a.complexity - b.complexity;
-        case 'Descending Complexity':
+        case "Descending Complexity":
           return b.complexity - a.complexity;
-        case 'Ascending Priority':
+        case "Ascending Priority":
           return a.priority - b.priority;
-        case 'Descending Priority':
+        case "Descending Priority":
           return b.priority - a.priority;
         default:
           return 0;
       }
-  });
+    });
 
   const generateTags = () => {
     const tags = new Set();
@@ -59,39 +69,34 @@ export const TodoProvider = ({ children }) => {
       (t) => t.tags && t.tags.split(",").forEach((tag) => tags.add(tag.trim()))
     );
     setTags([...tags]);
-  }
+  };
 
   const addTodo = (todo) => {
-    const newTodos = [...todos, {...todo, id : uid()}];
+    const newTodos = [{ ...todo, id: uid() }, ...todos];
     setTodos(newTodos);
   };
 
   const editTodo = (todo) => {
-    const newTodos = [...todos].map((t) => t.id === todo.id ? todo : t)
+    const newTodos = todos.map((t) => (t.id === todo.id ? todo : t));
     setTodos(newTodos);
-  }
+  };
 
   const completeTodo = (todo) => {
-    setTodos((todos) => {
-      // Toggle isCompleted for current todo in todos array first
-      const updatedTodos = todos.map((t) =>
+    setTodos((todos) => todos
+      .map((t) =>
         t.id === todo.id ? { ...t, isCompleted: !t.isCompleted } : t
-      );
-
-      // Sort the todos array so that completed Todos come after incomplete Todos
-      const sortedTodos = updatedTodos.sort((a, b) => {
+      )
+      .sort((a, b) => {
         if (a.isCompleted && !b.isCompleted) return 1;
-        if (!a.isCompleted && b.isCompleted) return -1; 
+        if (!a.isCompleted && b.isCompleted) return -1;
         return 0;
-      });
-
-      return sortedTodos;
-    });
+      })
+    );
   };
 
   const removeTodo = (todo) => {
     setTodos((todos) => todos.filter((t) => t.id !== todo.id));
-    if(power) setPower(!power);
+    if (power) setPower(!power);
   };
 
   const getTodo = (id) => {
@@ -101,11 +106,26 @@ export const TodoProvider = ({ children }) => {
   const togglePower = () => {
     if (!power) calcPowerTodos();
     setPower(!power);
-  }
+  };
 
   return (
     <TodoContext.Provider
-      value={{ todos, tags, displayedTodos, power, powerTodos, togglePower, setSearchTerm, setFilterTags, setSort, addTodo, editTodo, completeTodo, removeTodo, getTodo }}
+      value={{
+        todos,
+        tags,
+        displayedTodos,
+        power,
+        powerTodos,
+        togglePower,
+        setSearchTerm,
+        setFilterTags,
+        setSort,
+        addTodo,
+        editTodo,
+        completeTodo,
+        removeTodo,
+        getTodo,
+      }}
     >
       {children}
     </TodoContext.Provider>
